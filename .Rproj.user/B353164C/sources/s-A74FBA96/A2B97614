@@ -1,0 +1,28 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1560803740409.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2408599150",
+    "id" : "A2B97614",
+    "lastKnownWriteTime" : 1560804343,
+    "last_content_update" : 1560804405087,
+    "path" : "~/Documents/STRIPs/WORLE_17/notebooks/ordinations.Rmd",
+    "project_path" : "notebooks/ordinations.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "51,26",
+        "marks" : "<:46,0\n>:46,0",
+        "scrollLine" : "21",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

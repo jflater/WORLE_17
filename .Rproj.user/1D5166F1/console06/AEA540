@@ -1,0 +1,107 @@
+]0;~/Box Sync/STRIPs/WORLE_17[?1034hjflater-air:WORLE_17 jaredflater$ [Kjflater-air:WORLE_17 jaredflater$ ls
+WORLE_17.Rproj [34mcode[39;49m[0m           [34mdata[39;49m[0m
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ cd code
+]0;~/Box Sync/STRIPs/WORLE_17/codejflater-air:code jaredflater$ ls
+make               make_wafe_counts.R
+]0;~/Box Sync/STRIPs/WORLE_17/codejflater-air:code jaredflater$ mv make[K[K[K[K[K[K[Kls
+make_wafe_counts.R
+]0;~/Box Sync/STRIPs/WORLE_17/codejflater-air:code jaredflater$ cd Desk
+bash: cd: Desk: No such file or directory
+]0;~/Box Sync/STRIPs/WORLE_17/codejflater-air:code jaredflater$ cd ..
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ ls
+WORLE_17.Rproj [34mcode[39;49m[0m           [34mdata[39;49m[0m
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ cd ..
+]0;~/Box Sync/STRIPsjflater-air:STRIPs jaredflater$ l[Kcd ../Des[K[K[K
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ ls
+[34mBiolog[39;49m[0m                [34mMexico[39;49m[0m                [34mSTRIPs[39;49m[0m                [34mThesis[39;49m[0m                [34mincubation_manuscript[39;49m[0m
+[34mJournal Club Papers[39;49m[0m   [34mR.Projects[39;49m[0m            [34mSpring19Classes[39;49m[0m       [34mannual.review[39;49m[0m         latenightpainter.jpg
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ cd ..
+]0;~jflater-air:~ jaredflater$ ls
+[34m2018-Tutorials[39;49m[0m            [34mGitHub[39;49m[0m                    [34mPycharmProjects[39;49m[0m           microbiome_package_inc.R
+[34mApplications[39;49m[0m              [34mGoogle Drive[39;49m[0m              [34mScratch[39;49m[0m                   [34mold-text-editors[39;49m[0m
+[34mBlog[39;49m[0m                      [34mHPCC[39;49m[0m                      [34mShell_Tutorial[39;49m[0m            outline.rmd
+[34mBox Sync[39;49m[0m                  [34mKeys[39;49m[0m                      [34mThesis[39;49m[0m                    outline.rmd~
+[34mDesktop[39;49m[0m                   [34mLibrary[39;49m[0m                   [34manaconda[39;49m[0m                  [34mphylosmith[39;49m[0m
+[34mDocuments[39;49m[0m                 Makevars                  [34medirect[39;49m[0m                   [34mpicrust[39;49m[0m
+[34mDownloads[39;49m[0m                 [34mMovies[39;49m[0m                    filter_co_result.py       r
+[34mEderson-hpc[39;49m[0m               [34mMusic[39;49m[0m                     incubationshannon.Rmd     rodeo.log
+[34mFastTree[39;49m[0m                  [34mPictures[39;49m[0m                  incubationshannon.nb.html
+[34mGermsLab[39;49m[0m                  [34mPublic[39;49m[0m                    input_relabund.tif
+]0;~jflater-air:~ jaredflater$ cd Desktop/
+]0;~/Desktopjflater-air:Desktop jaredflater$ ls
+553S19_W04_HW Qs.docx                            Thesis-JF-11-2 copyW.docx
+553_HW03_FLATER.pdf                              bob_primer_plate.clean.tsv
+553_HW04_FLATER.pdf                              flater_fund_final.pptx
+553_HW7_FLATER.docx                              img_20190228_140102.052.png
+553_HW7_FLATER.pdf                               jareddefense.pptx
+553_HW8_FLATER.pdf                               manure_rate.xlsx
+Draft_Dr.Isenhart.docx                           old_bob_primer_plate.clean.xlsx
+Flater_Final_paper_531.docx                      phdpos.xlsx
+Flater_WORLE_WAFERFEN_12smpls.xlsx               strips_water_conc_2017.xlsx
+Flater_presentation_531.pptx                     ~$STRIPS_wafergen.xlsx
+Landowner_report_2018_jf.docx                    ~$aft_thesis.doc
+MiSeq Plate Key strips_filled-2.xls              ~$cubationArticleDraft(JESA)_JF_10_11_18_ah.docx
+MiSeq Plate Key strips_filled-3.xls              ~$cubationArticleDraft(JESA)_ah.docx
+Presentation-WithNumbers.pptx                    ~$cubationDraft.docx
+STRIPS_Armstrong_2018_SOPs.docx                  ~$esis_Final_Make_Revisions.docx
+STRIPS_wafergen.xlsx                             ~$ndowner report 2018.docx
+STRIPs Armstrong Rainfall Meeting.docx
+]0;~/Desktopjflater-air:Desktop jaredflater$ cp [K[K[Kmc[Kv Flater_WORLE_WAFERFEN_12smpls.xlsx ../Box\ Sync/STRIPs/dat[K[K[Kd[KD[KWORLE_17/data/
+]0;~/Desktopjflater-air:Desktop jaredflater$ mv Flater_WORLE_WAFERFEN_12smpls.xlsx ../Box\ Sync/STRIPs/WORLE_17/data/[C[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1@S[4@TRIP[1@_[1@w[1@a[1P[1P[1P[1@S[1@_[1@W[1P[1@w[1@a[11@fergen.xlsx
+]0;~/Desktopjflater-air:Desktop jaredflater$ mv STRIPS_wafergen.xlsx ../Box\ Sync/STRIPs/WORLE_17/data/[C[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1P[1@b[1@o[1@b[23@_primer_plate.clean.tsv
+]0;~/Desktopjflater-air:Desktop jaredflater$ ls
+553S19_W04_HW Qs.docx                            STRIPs Armstrong Rainfall Meeting.docx
+553_HW03_FLATER.pdf                              Thesis-JF-11-2 copyW.docx
+553_HW04_FLATER.pdf                              flater_fund_final.pptx
+553_HW7_FLATER.docx                              img_20190228_140102.052.png
+553_HW7_FLATER.pdf                               jareddefense.pptx
+553_HW8_FLATER.pdf                               manure_rate.xlsx
+Draft_Dr.Isenhart.docx                           phdpos.xlsx
+Flater_Final_paper_531.docx                      strips_water_conc_2017.xlsx
+Flater_presentation_531.pptx                     ~$aft_thesis.doc
+Landowner_report_2018_jf.docx                    ~$cubationArticleDraft(JESA)_JF_10_11_18_ah.docx
+MiSeq Plate Key strips_filled-2.xls              ~$cubationArticleDraft(JESA)_ah.docx
+MiSeq Plate Key strips_filled-3.xls              ~$cubationDraft.docx
+Presentation-WithNumbers.pptx                    ~$esis_Final_Make_Revisions.docx
+STRIPS_Armstrong_2018_SOPs.docx                  ~$ndowner report 2018.docx
+]0;~/Desktopjflater-air:Desktop jaredflater$ cd Bo[K[K[K[Kd
+]0;~jflater-air:~ jaredflater$ ls
+[34m2018-Tutorials[39;49m[0m            [34mGitHub[39;49m[0m                    [34mPycharmProjects[39;49m[0m           microbiome_package_inc.R
+[34mApplications[39;49m[0m              [34mGoogle Drive[39;49m[0m              [34mScratch[39;49m[0m                   [34mold-text-editors[39;49m[0m
+[34mBlog[39;49m[0m                      [34mHPCC[39;49m[0m                      [34mShell_Tutorial[39;49m[0m            outline.rmd
+[34mBox Sync[39;49m[0m                  [34mKeys[39;49m[0m                      [34mThesis[39;49m[0m                    outline.rmd~
+[34mDesktop[39;49m[0m                   [34mLibrary[39;49m[0m                   [34manaconda[39;49m[0m                  [34mphylosmith[39;49m[0m
+[34mDocuments[39;49m[0m                 Makevars                  [34medirect[39;49m[0m                   [34mpicrust[39;49m[0m
+[34mDownloads[39;49m[0m                 [34mMovies[39;49m[0m                    filter_co_result.py       r
+[34mEderson-hpc[39;49m[0m               [34mMusic[39;49m[0m                     incubationshannon.Rmd     rodeo.log
+[34mFastTree[39;49m[0m                  [34mPictures[39;49m[0m                  incubationshannon.nb.html
+[34mGermsLab[39;49m[0m                  [34mPublic[39;49m[0m                    input_relabund.tif
+]0;~jflater-air:~ jaredflater$ cd Box\ Sync/
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ ls
+[34mBiolog[39;49m[0m                [34mMexico[39;49m[0m                [34mSTRIPs[39;49m[0m                [34mThesis[39;49m[0m                [34mincubation_manuscript[39;49m[0m
+[34mJournal Club Papers[39;49m[0m   [34mR.Projects[39;49m[0m            [34mSpring19Classes[39;49m[0m       [34mannual.review[39;49m[0m         latenightpainter.jpg
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ cd [K incubation_manuscript/
+]0;~/Box Sync/incubation_manuscriptjflater-air:incubation_manuscript jaredflater$ ls
+[34mFigures[39;49m[0m                      alientable.Rmd               [34mreferences[39;49m[0m                   tree.nb.html
+[34mFunctions[39;49m[0m                    alientable.html              results_outline.Rmd          [34mtree_cache[39;49m[0m
+Incubation_manuscript.Rproj  bckpREADME.RMD               results_outline.html         [34mtree_files[39;49m[0m
+Intro.docx                   [34mcode[39;49m[0m                         results_outline.pdf          ~$Intro.docx
+Intro.odt                    [34mdata[39;49m[0m                         [34mresults_outline_cache[39;49m[0m        ~$draft.docx
+Introduction Paragraphs.docx draft.docx                   [34mresults_outline_files[39;49m[0m        ~$tline_ah.docx
+README.RMD                   [34mimages[39;49m[0m                       [34mtemp[39;49m[0m                         ~$troduction Paragraphs.docx
+README.html                  intro_draft_working_jf.docx  [34mthesis[39;49m[0m
+README.md                    outline_ah.docx              tree.RMD
+]0;~/Box Sync/incubation_manuscriptjflater-air:incubation_manuscript jaredflater$ cd [K[K[Kmv[K[Kcd ..
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ ls
+[34mBiolog[39;49m[0m                [34mMexico[39;49m[0m                [34mSTRIPs[39;49m[0m                [34mThesis[39;49m[0m                [34mincubation_manuscript[39;49m[0m
+[34mJournal Club Papers[39;49m[0m   [34mR.Projects[39;49m[0m            [34mSpring19Classes[39;49m[0m       [34mannual.review[39;49m[0m         latenightpainter.jpg
+]0;~/Box Syncjflater-air:Box Sync jaredflater$ cd STr[KRIPs/
+]0;~/Box Sync/STRIPsjflater-air:STRIPs jaredflater$ ls
+[34mWORLE_17[39;49m[0m
+]0;~/Box Sync/STRIPsjflater-air:STRIPs jaredflater$ cd WORLE_17/
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ ls
+WORLE_17.Rproj [34mcode[39;49m[0m           [34mdata[39;49m[0m           meta_data.txt
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ mv meta_data.txt t[Kdata/
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ ls
+WORLE_17.Rproj [34mcode[39;49m[0m           [34mdata[39;49m[0m
+]0;~/Box Sync/STRIPs/WORLE_17jflater-air:WORLE_17 jaredflater$ 

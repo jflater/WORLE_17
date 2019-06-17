@@ -1,0 +1,159 @@
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ ls
+'armstrong_gps_pts[movetonewfolder].R'   [0m[01;34mcode[0m   [01;34mdata[0m   generate_top_targets.R   just.soil.wafergen.RDS   WORLE_17.Rproj
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ mv generate_top_targets.R code/
+[K]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ ls
+'armstrong_gps_pts[movetonewfolder].R'   [0m[01;34mcode[0m   [01;34mdata[0m   just.soil.wafergen.RDS   WORLE_17.Rproj
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ cd
+]0;/home/jflater]0;jflater@jflater-Precision-T1700: ~[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~[00m$ ls
+DADA2.rmd  [0m[01;34mDesktop[0m  [01;34mDocuments[0m  [01;34mDownloads[0m  [01;34mKeys[0m  [01;34mMusic[0m  [01;34mPictures[0m  [01;34mPublic[0m  [01;34mR[0m  [01;34msnap[0m  [01;34mVideos[0m
+]0;/home/jflater]0;jflater@jflater-Precision-T1700: ~[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~[00m$ cd Downloads/
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ ls
+ 0-387-33745-8.pdf                            comparision.pptx
+ 1376-10.pdf                                  differential_heat_tree.pdf
+ 146837a0.pdf                                 Docherty_et_al-2019-Ecological_Applications.pdf
+ 1-s2.0-S0006295205006611-main.pdf            e02546-18.full.pdf
+ 1-s2.0-S0038071719300252-main.pdf           'FLATER_553 1ST DRAFT_nlt_mdm.docx'
+ 1-s2.0-S0140988314000024-main.pdf            Flater_WORLE_WAFERFEN_12smpls.xlsx
+'1-s2.0-S0360544215015649-main(1).pdf'        forests-10-00240.pdf
+ 1-s2.0-S0360544215015649-main.pdf           'Fry_Stable Isotope Ecology complete_CH 1 & 2.pdf'
+'1-s2.0-S0378775313010215-main(1).pdf'        [0m[01;35mimage002.jpg[0m
+ 1-s2.0-S0378775313010215-main.pdf           [01;35m'Image from iOS.jpg'[0m
+'1-s2.0-S0965856415002311-main(1).pdf'        [01;35mimg_20190412_093138.095.png[0m
+ 1-s2.0-S0965856415002311-main.pdf            [01;35mimg_20190412_111831.861.png[0m
+'2019 Exposure Survey.pdf'                    [01;35mimg_20190412_111835.797.png[0m
+ 3150806.pdf                                  jareddefense.pptx
+ 553_HW02_Flater.odf.odt                      journal.pcbi.1005404.pdf
+ 553_HW02_Flater.odf.pdf                      journal.pone.0087217.PDF
+ 553_HW02_Flater.pdf                         'Kopittke & Menzies (2007) Basic cation ratio_REVIEW.pdf'
+ 553_HW05_Flater.odt                          nature16069.pdf
+ 553_HW05_Flater.pdf                          nitrification_1.pdf
+ 553_HWO2_Flater.pdf                          nrmicro2367.pdf
+ 553S19_W02_HWQs.docx                         outline_ah.docx
+ 553S19_W05_HWQs_pH.docx                      peerj-05-2915.pdf
+ 553S19_W06_HWQs_Roots1.docx                  phdpos.xlsx
+ 553S19_W13_HWQs_K.docx                       plant_soil_relationship_term_paper_flater_draft_s2019.docx
+ 553S19_WK11_HWQs_N.docx                      s41598-018-22380-z.pdf
+'553S19_WK12_HWQs_P(1).docx'                  s41598-018-23931-0.pdf
+ 553S19_WK12_HWQs_P.docx                      [01;31mScienceDirect_articles_09Apr2019_19-15-42.159.zip[0m
+'553S19_WK15_HWQs_Micros(1).docx'            [01;35m'Screenshot_2019-02-19 Grad Status.png'[0m
+ 553S19_WK15_HWQs_Micros.docx                'Shi et al. 2015 - tillage, P fert, and microbial responses.pdf'
+'553S19_WK16_HWQs_Stable Isotopes.docx'       sssaj-70-3-950.pdf
+ aj-107-4-1377.pdf                           'Steingrobe & Classen (2000) K in rhizosphere.pdf'
+ Aminov-2009-Environmental_Microbiology.pdf   [01;31mSTRIPs.zip[0m
+ AnnualReviewFlater2018.docx                  thesis.pdf
+ annurev-genet-102209-163517.pdf             'Updated Schedule_S19_1.25.19 (with DLs).docx'
+ brittenhambethany_2017_isumsthesis.pdf       Win10_Edu_1809Oct_English_x64.iso
+ citiCompletionReport7965345.pdf             'Zhang (2015) Managing N for sustainable development.pdf'
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ ls -lh
+total 5.0G
+-rw-rw-r-- 1 jflater jflater 3.4M May  3 12:09  0-387-33745-8.pdf
+-rw-rw-r-- 1 jflater jflater 760K Mar 14 13:20  1376-10.pdf
+-rw-rw-r-- 1 jflater jflater 116K Mar 19 14:50  146837a0.pdf
+-rw-rw-r-- 1 jflater jflater 218K Mar 21 09:15  1-s2.0-S0006295205006611-main.pdf
+-rw-rw-r-- 1 jflater jflater 880K Mar 20 16:06  1-s2.0-S0038071719300252-main.pdf
+-rw-rw-r-- 1 jflater jflater 981K Dec 21 10:25  1-s2.0-S0140988314000024-main.pdf
+-rw-rw-r-- 1 jflater jflater 931K Dec 21 10:28 '1-s2.0-S0360544215015649-main(1).pdf'
+-rw-rw-r-- 1 jflater jflater 931K Dec 21 10:28  1-s2.0-S0360544215015649-main.pdf
+-rw-rw-r-- 1 jflater jflater 324K Dec 21 10:29 '1-s2.0-S0378775313010215-main(1).pdf'
+-rw-rw-r-- 1 jflater jflater 324K Dec 21 10:28  1-s2.0-S0378775313010215-main.pdf
+-rw-rw-r-- 1 jflater jflater 957K Dec 21 10:29 '1-s2.0-S0965856415002311-main(1).pdf'
+-rw-rw-r-- 1 jflater jflater 957K Dec 21 10:28  1-s2.0-S0965856415002311-main.pdf
+-rw-rw-r-- 1 jflater jflater 784K Mar 29 12:45 '2019 Exposure Survey.pdf'
+-rw-rw-r-- 1 jflater jflater 2.2M Feb 12 15:56  3150806.pdf
+-rw-rw-r-- 1 jflater jflater 146K Jan 25 10:33  553_HW02_Flater.odf.odt
+-rw-rw-r-- 1 jflater jflater 161K Jan 25 10:24  553_HW02_Flater.odf.pdf
+-rw-r--r-- 1 jflater jflater 161K Jan 25 10:31  553_HW02_Flater.pdf
+-rw-r--r-- 1 jflater jflater  24K Feb 15 11:38  553_HW05_Flater.odt
+-rw-r--r-- 1 jflater jflater  43K Feb 15 11:39  553_HW05_Flater.pdf
+-rw-r--r-- 1 jflater jflater 161K Jan 25 10:28  553_HWO2_Flater.pdf
+-rw-rw-r-- 1 jflater jflater  19K Jan 24 11:21  553S19_W02_HWQs.docx
+-rw-rw-r-- 1 jflater jflater  17K Feb 15 09:59  553S19_W05_HWQs_pH.docx
+-rw-rw-r-- 1 jflater jflater  17K Feb 19 11:37  553S19_W06_HWQs_Roots1.docx
+-rw-rw-r-- 1 jflater jflater  28K Apr  9 13:36  553S19_W13_HWQs_K.docx
+-rw-r--r-- 1 jflater jflater  17K Mar 27 12:34  553S19_WK11_HWQs_N.docx
+-rw-rw-r-- 1 jflater jflater  22K Apr  4 12:48 '553S19_WK12_HWQs_P(1).docx'
+-rw-rw-r-- 1 jflater jflater  22K Apr  4 12:48  553S19_WK12_HWQs_P.docx
+-rw-rw-r-- 1 jflater jflater  18K Apr 26 09:07 '553S19_WK15_HWQs_Micros(1).docx'
+-rw-rw-r-- 1 jflater jflater  18K Apr 26 09:07  553S19_WK15_HWQs_Micros.docx
+-rw-rw-r-- 1 jflater jflater  18K May  2 13:19 '553S19_WK16_HWQs_Stable Isotopes.docx'
+-rw-rw-r-- 1 jflater jflater 4.5M Apr 19 12:13  aj-107-4-1377.pdf
+-rw-rw-r-- 1 jflater jflater 379K Mar 20 11:58  Aminov-2009-Environmental_Microbiology.pdf
+-rw-rw-r-- 1 jflater jflater  49K Feb 19 11:47  AnnualReviewFlater2018.docx
+-rw-rw-r-- 1 jflater jflater 2.1M Mar 21 14:24  annurev-genet-102209-163517.pdf
+-rw-rw-r-- 1 jflater jflater 4.4M Mar 22 14:18  brittenhambethany_2017_isumsthesis.pdf
+-rw-rw-r-- 1 jflater jflater 409K Mar  5 16:54  citiCompletionReport7965345.pdf
+-rw-rw-r-- 1 jflater jflater  44K Feb  4 13:27  comparision.pptx
+-rw-rw-r-- 1 jflater jflater 629K Apr 25 10:07  differential_heat_tree.pdf
+-rw-rw-r-- 1 jflater jflater 573K Mar  7 10:28  Docherty_et_al-2019-Ecological_Applications.pdf
+-rw-rw-r-- 1 jflater jflater 1.1M Mar 20 15:57  e02546-18.full.pdf
+-rw-rw-r-- 1 jflater jflater 317K May  6 09:49 'FLATER_553 1ST DRAFT_nlt_mdm.docx'
+-rw-rw-r-- 1 jflater jflater  18K Feb 18 15:46  Flater_WORLE_WAFERFEN_12smpls.xlsx
+-rw-rw-r-- 1 jflater jflater 5.9M Mar 14 09:37  forests-10-00240.pdf
+-rw-rw-r-- 1 jflater jflater 697K May  2 13:22 'Fry_Stable Isotope Ecology complete_CH 1 & 2.pdf'
+-rw-rw-r-- 1 jflater jflater  78K Feb  7 09:19  [0m[01;35mimage002.jpg[0m
+-rw-rw-r-- 1 jflater jflater 818K May  3 09:43 [01;35m'Image from iOS.jpg'[0m
+-rw-rw-r-- 1 jflater jflater 354K Apr 12 09:33  [01;35mimg_20190412_093138.095.png[0m
+-rw-rw-r-- 1 jflater jflater 191K Apr 12 11:19  [01;35mimg_20190412_111831.861.png[0m
+-rw-rw-r-- 1 jflater jflater 234K Apr 12 11:19  [01;35mimg_20190412_111835.797.png[0m
+-rw-rw-r-- 1 jflater jflater  61M Apr  8 13:01  jareddefense.pptx
+-rw-rw-r-- 1 jflater jflater 6.7M Apr 23 11:09  journal.pcbi.1005404.pdf
+-rw-rw-r-- 1 jflater jflater 577K Mar 20 13:13  journal.pone.0087217.PDF
+-rw-rw-r-- 1 jflater jflater 561K Apr 19 12:27 'Kopittke & Menzies (2007) Basic cation ratio_REVIEW.pdf'
+-rw-rw-r-- 1 jflater jflater 540K Mar  7 10:27  nature16069.pdf
+-rw-rw-r-- 1 jflater jflater 245K Apr 19 09:35  nitrification_1.pdf
+-rw-rw-r-- 1 jflater jflater 873K Dec 17 13:48  nrmicro2367.pdf
+-rw-rw-r-- 1 jflater jflater  19K Feb  5 15:47  outline_ah.docx
+-rw-rw-r-- 1 jflater jflater 4.7M Apr  8 12:58  peerj-05-2915.pdf
+-rw-rw-r-- 1 jflater jflater  16K Apr  9 11:20  phdpos.xlsx
+-rw-rw-r-- 1 jflater jflater  25K Mar 20 13:10  plant_soil_relationship_term_paper_flater_draft_s2019.docx
+-rw-rw-r-- 1 jflater jflater 1.6M Apr  8 13:35  s41598-018-22380-z.pdf
+-rw-rw-r-- 1 jflater jflater 3.9M Dec 17 14:12  s41598-018-23931-0.pdf
+-rw-rw-r-- 1 jflater jflater  56M Apr  9 14:15  [01;31mScienceDirect_articles_09Apr2019_19-15-42.159.zip[0m
+-rw-rw-r-- 1 jflater jflater  95K Feb 19 11:52 [01;35m'Screenshot_2019-02-19 Grad Status.png'[0m
+-rw-rw-r-- 1 jflater jflater 1.3M Apr  5 12:08 'Shi et al. 2015 - tillage, P fert, and microbial responses.pdf'
+-rw-rw-r-- 1 jflater jflater 107K Mar  7 10:51  sssaj-70-3-950.pdf
+-rw-rw-r-- 1 jflater jflater 261K Apr 10 12:46 'Steingrobe & Classen (2000) K in rhizosphere.pdf'
+-rw-rw-r-- 1 jflater jflater 344K Apr 12 11:34  [01;31mSTRIPs.zip[0m
+-rw-rw-r-- 1 jflater jflater 2.8M Mar 25 10:34  thesis.pdf
+-rw-rw-r-- 1 jflater jflater  15K Jan 31 14:33 'Updated Schedule_S19_1.25.19 (with DLs).docx'
+-rw-rw-r-- 1 jflater jflater 4.8G Jan  9 14:42  Win10_Edu_1809Oct_English_x64.iso
+-rw-rw-r-- 1 jflater jflater 580K Mar 29 12:34 'Zhang (2015) Managing N for sustainable development.pdf'
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ ls *[K[K[K[Kmv meta.txt ../Documents/STRIPs/da[K[KWORLE_17/data/
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ mv meta.txt ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/R ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/u ../Documents/STRIPs/WORLE_17/data/s ../Documents/STRIPs/WORLE_17/data/d ../Documents/STRIPs/WORLE_17/data/a.RDS ../Documents/STRIPs/WORLE_17/data/
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ mv usda.RDS ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/[1P ../Documents/STRIPs/WORLE_17/data/s ../Documents/STRIPs/WORLE_17/data/t ../Documents/STRIPs/WORLE_17/data/rips.R ../Documents/STRIPs/WORLE_17/data/
+]0;/home/jflater/Downloads]0;jflater@jflater-Precision-T1700: ~/Downloads[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Downloads[00m$ nvim st[Kr[Ktrips[K[K[K[K[K[K[K[K[K[K[Kcd ../Documents/STRIPs/
+]0;/home/jflater/Documents/STRIPs]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs[00m$ ls
+[0m[01;34mWORLE_17[0m
+]0;/home/jflater/Documents/STRIPs]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs[00m$ cd WORLE_17/
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ ls
+'armstrong_gps_pts[movetonewfolder].R'   [0m[01;34mcode[0m   [01;34mdata[0m   just.soil.wafergen.RDS   WORLE_17.Rproj
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ cd[K[Kcd code
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ ls
+generate_top_targets.R
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ nvim[K[K[K[Kcd ..
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ mv code/[K[K[K[K[Kdata/strips.R code/
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ ls
+'armstrong_gps_pts[movetonewfolder].R'   [0m[01;34mcode[0m   [01;34mdata[0m   just.soil.wafergen.RDS   WORLE_17.Rproj
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ cd code/
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ ls
+generate_top_targets.R  strips.R
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ nivm strips.R 
+
+Command 'nivm' not found, did you mean:
+
+  command 'nvim' from deb neovim
+  command 'nim' from deb nim
+
+Try: sudo apt install <deb name>
+
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ nvim strips.R 
+[23;0;0t[?2004l[?1004l[?25h
+[1]+  Stopped                 nvim strips.R
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ nvim strips.R 
+[23;0;0t[?2004l[?1004l[?25h]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ ls
+generate_top_targets.R  strips.R
+]0;/home/jflater/Documents/STRIPs/WORLE_17/code]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ [K]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17/code[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17/code[00m$ cd ..
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ git status
+fatal: not a git repository (or any of the parent directories): .git
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ ^C
+]0;/home/jflater/Documents/STRIPs/WORLE_17]0;jflater@jflater-Precision-T1700: ~/Documents/STRIPs/WORLE_17[01;32mjflater@jflater-Precision-T1700[00m:[01;34m~/Documents/STRIPs/WORLE_17[00m$ 
