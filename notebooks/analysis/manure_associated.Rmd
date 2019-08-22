@@ -49,6 +49,7 @@ manure_ASVs_physeq <- merge_phyloseq(my_subset, tax_table(phy), sample_data(phy)
   filter_taxa(function(x) sum(x) >= 1, T) 
 ```
 
+### Trying to get a good plot of the abundance of manure associated ASVs
 ```{r}
 taxa_abundance_bars_ggplot(manure_ASVs_physeq, classification = "Phylum", treatment = c("treatment"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean") 
 ```
