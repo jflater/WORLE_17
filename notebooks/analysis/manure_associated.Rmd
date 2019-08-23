@@ -19,7 +19,7 @@ library(phylosmith)
 ```{r}
 phy <- readRDS("../../data/RDS/worle_with_meta.RDS")
 colnames(sample_data(phy))
-unique(phy@sam_data$matrix)
+unique(phy@sam_data$day)
 ```
 
 ### Get a list of ASVs from manure and soil before manure was applied
@@ -29,36 +29,43 @@ manure_otus <- subset_samples(phy, matrix == "manure") %>%
   otu_table() %>%
   rownames()
 
-soil_otus <- subset_samples(phy, matrix == "soil" & day == "b") %>%
+#aa <- subset_samples(phy, matrix %in% c("manure", "soil")) %>%
+#  unique_taxa(treatment = c("matrix"))
+  
+cc <- subset_samples(phy, treatment == "no_manure_strip" | day == "b") %>%
   filter_taxa(function(x) sum(x) >= 1, T) %>%
   otu_table() %>%
   rownames()
+
+
+
+vvv_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = cc))
+persitors <- attr(vvv_diag, "intersections")$Manure_ASVs
+# See if lines 32 to 40 make the same plot as using the chunk below, don't change the chunk below
 ```
 
 ### Find ASVs from manure that are not present in any soil baseline sample
 ```{r}
-v_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = soil_otus))
+v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil))
 
-just_manure_ASVs <- attr(v_diag, "intersections")$Manure_ASVs
+just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs
 ```
 
 ### Plot relative abundance of only manure associated ASVs   
 ```{r}
-my_subset <- subset(otu_table(phy), rownames(otu_table(phy)) %in% just_manure_ASVs)
+phy_soil <- subset_samples(phy, matrix == "soil") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+my_subset <- subset(otu_table(phy_soil), rownames(otu_table(phy_soil)) %in% persitors)
+
 manure_ASVs_physeq <- merge_phyloseq(my_subset, tax_table(phy), sample_data(phy)) %>%
   filter_taxa(function(x) sum(x) >= 1, T) 
+manure_ASVs_physeq 
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
 ```{r}
-rds_schuyler_jared <- saveRDS(manure_ASVs_physeq, "../jaredspoo.RDS")
-
-test <- relative_abundance(manure_ASVs_physeq)
-
-otu_table(test)
-sample_data(test)
-
-taxa_abundance_bars(test, classification = "Phylum", treatment = c("treatment", "day"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean") 
+taxa_abundance_bars(manure_ASVs_physeq, classification = "Genus", treatment = c("treatment"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean", wrap_by = "day")
 ```
 ## Working off my own scripts from the incubation manuscript   
 We would like to generate a plot showing only soil samples from `S1-S5` to determine if proximity to strips affects persistance. Control plots are the greatest distance from where manure was applied. 
