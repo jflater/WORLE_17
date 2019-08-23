@@ -19,7 +19,7 @@ library(phylosmith)
 ```{r}
 phy <- readRDS("../../data/RDS/worle_with_meta.RDS")
 colnames(sample_data(phy))
-unique(phy@sam_data$day)
+unique(phy@sam_data$matrix)
 ```
 
 ### Get a list of ASVs from manure and soil before manure was applied
@@ -37,9 +37,9 @@ soil_otus <- subset_samples(phy, matrix == "soil" & day == "b") %>%
 
 ### Find ASVs from manure that are not present in any soil baseline sample
 ```{r}
-v_diag <- venn(list("Manure" = manure_otus, "Soil" = soil_otus))
+v_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = soil_otus))
 
-just_manure_ASVs <- attr(v_diag, "intersections")$Manure
+just_manure_ASVs <- attr(v_diag, "intersections")$Manure_ASVs
 ```
 
 ### Plot relative abundance of only manure associated ASVs   
@@ -51,6 +51,42 @@ manure_ASVs_physeq <- merge_phyloseq(my_subset, tax_table(phy), sample_data(phy)
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
 ```{r}
-taxa_abundance_bars_ggplot(manure_ASVs_physeq, classification = "Phylum", treatment = c("treatment"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean") 
+rds_schuyler_jared <- saveRDS(manure_ASVs_physeq, "../jaredspoo.RDS")
+
+test <- relative_abundance(manure_ASVs_physeq)
+
+otu_table(test)
+sample_data(test)
+
+taxa_abundance_bars(test, classification = "Phylum", treatment = c("treatment", "day"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean") 
+```
+## Working off my own scripts from the incubation manuscript   
+We would like to generate a plot showing only soil samples from `S1-S5` to determine if proximity to strips affects persistance. Control plots are the greatest distance from where manure was applied. 
+
+```{r}
+#Rename treatments to more informative titles
+data <- data.frame(sample_data(manure_ASVs_physeq)) %>%
+  mutate(TreatmentAndDay = paste(treatment, day))
+
+rownames(data) <- data$id
+sample_data(manure_ASVs_physeq) <- data
+sample_data(manure_ASVs_physeq)$day <- as.factor(sample_data(manure_ASVs_physeq)$day)
+sample_data(manure_ASVs_physeq)
+unique(manure_ASVs_physeq@sam_data$day)
+```
+
+```{r}
+# test conglomorate samples from phylosmith
+tt <- conglomerate_samples(manure_ASVs_physeq, c("TreatmentAndDay")) # slow and still gives NA, never completed testing this
+
+manure_ASVs_soil <- subset_samples(manure_ASVs_physeq, matrix %in% c("soil")) %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>%
+  melt_phyloseq() %>%
+  arrange(Phylum)
+
+test <- manure_ASVs_soil %>%
+  group_by(TreatmentAndDay) 
+
+test
 ```
 
