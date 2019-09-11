@@ -1,0 +1,99 @@
+---
+title: "Analysis of WORLE 2017 soils and water 16s rRNA"
+author: "Jared"
+date: "6/20/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#### First we read in the data, a R data structure of the phyloseq object       
+```{r, echo = F}
+library(phyloseq)
+library(tidyverse)
+library(gplots)
+library(phylosmith)
+```
+```{r}
+phy <- readRDS("./data/RDS/worle_with_meta.RDS")
+colnames(sample_data(phy))
+unique(phy@sam_data$day)
+```
+
+### Get a list of ASVs from manure and soil before manure was applied
+```{r}
+manure_otus <- subset_samples(phy, matrix == "manure") %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>%
+  otu_table() %>%
+  rownames()
+
+#aa <- subset_samples(phy, matrix %in% c("manure", "soil")) %>%
+#  unique_taxa(treatment = c("matrix"))
+  
+cc <- subset_samples(phy, treatment == "no_manure_strip" | day == "b") %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>%
+  otu_table() %>%
+  rownames()
+
+
+
+vvv_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = cc))
+persitors <- attr(vvv_diag, "intersections")$Manure_ASVs
+# See if lines 32 to 40 make the same plot as using the chunk below, don't change the chunk below
+```
+
+### Find ASVs from manure that are not present in any soil baseline sample
+```{r}
+v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil))
+
+just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs
+```
+
+### Plot relative abundance of only manure associated ASVs   
+```{r}
+phy_soil <- subset_samples(phy, matrix == "soil") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+
+my_subset <- subset(otu_table(phy_soil), rownames(otu_table(phy_soil)) %in% persitors)
+
+manure_ASVs_physeq <- merge_phyloseq(my_subset, tax_table(phy), sample_data(phy)) %>%
+  filter_taxa(function(x) sum(x) >= 1, T) 
+manure_ASVs_physeq 
+```
+
+### Trying to get a good plot of the abundance of manure associated ASVs
+```{r}
+taxa_abundance_bars(manure_ASVs_physeq, classification = "Genus", treatment = c("treatment"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean", wrap_by = "day")
+```
+## Working off my own scripts from the incubation manuscript   
+We would like to generate a plot showing only soil samples from `S1-S5` to determine if proximity to strips affects persistance. Control plots are the greatest distance from where manure was applied. 
+
+```{r}
+#Rename treatments to more informative titles
+data <- data.frame(sample_data(manure_ASVs_physeq)) %>%
+  mutate(TreatmentAndDay = paste(treatment, day))
+
+rownames(data) <- data$id
+sample_data(manure_ASVs_physeq) <- data
+sample_data(manure_ASVs_physeq)$day <- as.factor(sample_data(manure_ASVs_physeq)$day)
+sample_data(manure_ASVs_physeq)
+unique(manure_ASVs_physeq@sam_data$day)
+```
+
+```{r}
+# test conglomorate samples from phylosmith
+tt <- conglomerate_samples(manure_ASVs_physeq, c("TreatmentAndDay")) # slow and still gives NA, never completed testing this
+
+manure_ASVs_soil <- subset_samples(manure_ASVs_physeq, matrix %in% c("soil")) %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>%
+  melt_phyloseq() %>%
+  arrange(Phylum)
+
+test <- manure_ASVs_soil %>%
+  group_by(TreatmentAndDay) 
+
+test
+```
+

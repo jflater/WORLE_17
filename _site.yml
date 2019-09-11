@@ -5,6 +5,13 @@ navbar:
   left:
   - text: Index
     href: index.html
+  - text: Manure-associated
+    href: manure_associated.html  
+  - text: Diversity  
+    href: diversity.html 
+  - text: Index  
+    href: index.html
+    
     
 output:
   html_document:
