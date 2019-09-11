@@ -17,6 +17,11 @@ library(gplots)
 library(phylosmith)
 ```
 ```{r}
+# source functions
+source("code/functions.R")
+```
+
+```{r}
 phy <- readRDS("./data/RDS/worle_with_meta.RDS")
 colnames(sample_data(phy))
 unique(phy@sam_data$day)
@@ -40,27 +45,28 @@ cc <- subset_samples(phy, treatment == "no_manure_strip" | day == "b") %>%
 
 
 vvv_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = cc))
-persitors <- attr(vvv_diag, "intersections")$Manure_ASVs
+manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs
 # See if lines 32 to 40 make the same plot as using the chunk below, don't change the chunk below
 ```
 
-### Find ASVs from manure that are not present in any soil baseline sample
-```{r}
-v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil))
+<!-- ### Find ASVs from manure that are not present in any soil baseline sample -->
+<!-- ```{r} -->
+<!-- #v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil)) -->
 
-just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs
-```
+<!-- just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs -->
+<!-- ``` -->
 
 ### Plot relative abundance of only manure associated ASVs   
 ```{r}
-phy_soil <- subset_samples(phy, matrix == "soil") %>%
-  filter_taxa(function(x) sum(x) >= 1, T)
-
-my_subset <- subset(otu_table(phy_soil), rownames(otu_table(phy_soil)) %in% persitors)
-
-manure_ASVs_physeq <- merge_phyloseq(my_subset, tax_table(phy), sample_data(phy)) %>%
-  filter_taxa(function(x) sum(x) >= 1, T) 
-manure_ASVs_physeq 
+# Check reads, I was under the impression that all samples had at least 10k
+phy.OTU <- OTU_to_column(phy)
+manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
+  rarefy_even_depth(sample.size = 10000, rngseed = 909090) %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>%
+  transform_sample_counts(function(x) {x/sum(x)}) %>%
+  subset_taxa(OTUID %in% manure_persitors)
+  
+abundance_heatmap(manure.phy, classification = NULL, treatment = "treatment", subset = "day", transformation = 'none', colors = 'default')
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
