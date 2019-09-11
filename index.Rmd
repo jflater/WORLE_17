@@ -1,0 +1,12 @@
+---
+title: "index"
+author: "Jared Flater"
+date: "9/11/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Landing page for my website.

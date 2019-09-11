@@ -1,0 +1,13 @@
+name: Random Things
+output_dir: docs
+navbar:
+  title: 'WORLE Data Analysis'
+  left:
+  - text: Index
+    href: index.html
+    
+output:
+  html_document:
+    theme: lumen
+    lib_dir: site_libs
+    self_contained: no
