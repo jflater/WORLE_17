@@ -48,9 +48,8 @@ cc <- subset_samples(phy, treatment == "no_manure_strip" | day == "b") %>%
 
 
 vvv_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = cc))
-manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs %>%
-  as.character()
-# See if lines 32 to 40 make the same plot as using the chunk below, don't change the chunk below
+manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs 
+dput(manure_persitors)
 ```
 
 <!-- ### Find ASVs from manure that are not present in any soil baseline sample -->
@@ -65,13 +64,14 @@ manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs %>%
 # Check reads, I was under the impression that all samples had at least 10k
 phy.OTU <- OTU_to_column(phy)
 manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
-  #rarefy_even_depth(sample.size = 10000, rngseed = 909090) %>%
   filter_taxa(function(x) sum(x) >= 1, T) %>%
-  transform_sample_counts(function(x) {x/sum(x)}) %>%
-  subset_taxa(OTUID %in% manure_persitors) %>%
-  filter_taxa()
-  
-abundance_heatmap(manure.phy, classification = NULL, treatment = "treatment", subset = "day", transformation = 'none', colors = 'default')
+  transform_sample_counts(function(x) {x/sum(x)})
+
+persistors.phy <- subset_taxa(manure.phy, OTUID %in% manure_persitors)
+persistors.phy
+plot_heatmap(persistors.phy)
+
+abundance_heatmap(persistors.phy, classification = NULL, treatment = "treatment", subset = "day", transformation = 'none', colors = 'default')
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
