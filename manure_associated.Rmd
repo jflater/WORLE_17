@@ -37,38 +37,28 @@ manure_otus <- subset_samples(phy, matrix == "manure") %>%
   otu_table() %>%
   rownames()
 
-#aa <- subset_samples(phy, matrix %in% c("manure", "soil")) %>%
-#  unique_taxa(treatment = c("matrix"))
-  
 cc <- subset_samples(phy, treatment == "no_manure_strip" | day == "b") %>%
   filter_taxa(function(x) sum(x) >= 1, T) %>%
   otu_table() %>%
   rownames()
 
-
-
 vvv_diag <- venn(list("Manure_ASVs" = manure_otus, "Soil_ASVs" = cc))
 manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs 
-dput(manure_persitors)
 ```
-
-<!-- ### Find ASVs from manure that are not present in any soil baseline sample -->
-<!-- ```{r} -->
-<!-- #v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil)) -->
-
-<!-- just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs -->
-<!-- ``` -->
 
 ### Plot relative abundance of only manure associated ASVs   
 ```{r}
 # Check reads, I was under the impression that all samples had at least 10k
 phy.OTU <- OTU_to_column(phy)
 manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
-  filter_taxa(function(x) sum(x) >= 1, T) %>%
-  transform_sample_counts(function(x) {x/sum(x)})
+  filter_taxa(function(x) sum(x) >= 1, T) 
 
-persistors.phy <- subset_taxa(manure.phy, OTUID %in% manure_persitors)
+persistors.phy <- subset_taxa(manure.phy, OTUID %in% manure_persitors) %>%
+  filter_taxa(function(x) sum(x) >= 5, T) 
 persistors.phy
+min(sample_sums(persistors.phy))
+max(sample_sums(persistors.phy))
+
 plot_heatmap(persistors.phy)
 
 abundance_heatmap(persistors.phy, classification = NULL, treatment = "treatment", subset = "day", transformation = 'none', colors = 'default')

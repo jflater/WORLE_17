@@ -9,9 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Jared" />
 
 
-<title>WORLE rainfall simulation bacterial diversity</title>
+<title>Analysis of WORLE 2017 soils and water 16s rRNA</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,15 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -263,99 +258,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
 
 
 
@@ -365,16 +268,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -410,22 +303,27 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">WORLE rainfall simulation bacterial diversity</h1>
+<h1 class="title toc-ignore">Analysis of WORLE 2017 soils and water 16s rRNA</h1>
+<h4 class="author">Jared</h4>
+<h4 class="date">6/20/2019</h4>
 
 </div>
 
 
-<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)</code></pre>
+<div id="first-we-read-in-the-data-a-r-data-structure-of-the-phyloseq-object" class="section level4">
+<h4>First we read in the data, a R data structure of the phyloseq object</h4>
+<pre class="r"><code># source functions
+source(&quot;code/functions.R&quot;)</code></pre>
+<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)
+colnames(sample_data(phy))</code></pre>
+<pre><code>##  [1] &quot;id&quot;               &quot;PI&quot;               &quot;matrix&quot;          
+##  [4] &quot;plot&quot;             &quot;treatment&quot;        &quot;day&quot;             
+##  [7] &quot;depth&quot;            &quot;in_plot_location&quot; &quot;block&quot;           
+## [10] &quot;runoff_sample&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$day)</code></pre>
+<pre><code>## [1] &quot;0&quot;   &quot;b&quot;   &quot;t0&quot;  &quot;t14&quot; &quot;t2&quot;  &quot;t21&quot; &quot;t42&quot;</code></pre>
 <pre class="r"><code>data &lt;- data.frame(sample_data(phy)) %&gt;%
   filter(matrix == &quot;soil&quot;) %&gt;%
   mutate(Vegetation = case_when(in_plot_location %in% c(&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;, &quot;s4&quot;) ~ &quot;Crop&quot;,
@@ -872,71 +770,276 @@ sample_names(phy)</code></pre>
 ## [861] &quot;PMB3C1&quot;                  &quot;PMB3F1&quot;</code></pre>
 <pre class="r"><code>rownames(all_data) &lt;- all_data$id
 
-sample_data(phy) &lt;- all_data</code></pre>
-<pre class="r"><code>colnames(phy@sam_data)</code></pre>
-<pre><code>##  [1] &quot;id&quot;               &quot;PI&quot;               &quot;matrix&quot;          
-##  [4] &quot;plot&quot;             &quot;treatment&quot;        &quot;day&quot;             
-##  [7] &quot;depth&quot;            &quot;in_plot_location&quot; &quot;block&quot;           
-## [10] &quot;runoff_sample&quot;    &quot;Vegetation&quot;</code></pre>
-<pre class="r"><code>unique(phy@sam_data$matrix)</code></pre>
-<pre><code>## [1] &quot;water&quot;  &quot;soil&quot;   &quot;manure&quot;</code></pre>
-<pre class="r"><code>unique(phy@sam_data$day)</code></pre>
+sample_data(phy) &lt;- all_data
+unique(phy@sam_data$day)</code></pre>
 <pre><code>## [1] &quot;0&quot;   &quot;b&quot;   &quot;t0&quot;  &quot;t14&quot; &quot;t02&quot; &quot;t21&quot; &quot;t42&quot;</code></pre>
-<pre class="r"><code>unique(phy@sam_data$depth)</code></pre>
-<pre><code>## [1] NA   &quot;d1&quot; &quot;d2&quot;</code></pre>
-<pre class="r"><code>unique(phy@sam_data$treatment)</code></pre>
-<pre><code>## [1] &quot;manured_control&quot; &quot;no_manure_strip&quot; &quot;manured_strip&quot;   NA</code></pre>
-<pre class="r"><code>base_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;b&quot; &amp; depth == &quot;d1&quot;) 
-
-min(taxa_sums(base_all_measures))</code></pre>
-<pre><code>## [1] 0</code></pre>
-<pre class="r"><code>plot_richness(base_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
-<pre><code>## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-## any singletons. This is highly suspicious. Results of richness
-## estimates (for example) are probably unreliable, or wrong, if you have already
-## trimmed low-abundance taxa from the data.
-## 
-## We recommended that you find the un-trimmed data and retry.</code></pre>
-<pre><code>## Warning: Removed 345 rows containing missing values (geom_errorbar).</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-4-1.png" width="816" /></p>
-<pre class="r"><code>t0_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t0&quot; &amp; depth == &quot;d1&quot;) 
-
-plot_richness(t0_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
-<pre><code>## Warning: Removed 345 rows containing missing values (geom_errorbar).</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-5-1.png" width="816" /></p>
-<pre class="r"><code>t2_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t02&quot; &amp; depth == &quot;d1&quot;) 
-
-plot_richness(t2_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
-<pre><code>## Warning: Removed 340 rows containing missing values (geom_errorbar).</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-6-1.png" width="816" /></p>
-<pre class="r"><code>t14_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t14&quot; &amp; depth == &quot;d1&quot;) 
-
-plot_richness(t14_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
-<pre><code>## Warning: Removed 335 rows containing missing values (geom_errorbar).</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-7-1.png" width="816" /></p>
-<pre class="r"><code>t42_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t42&quot; &amp; depth == &quot;d1&quot;) 
-
-plot_richness(t42_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
-<pre><code>## Warning in estimate_richness(physeq, split = TRUE, measures = measures): The data you have provided does not have
-## any singletons. This is highly suspicious. Results of richness
-## estimates (for example) are probably unreliable, or wrong, if you have already
-## trimmed low-abundance taxa from the data.
-## 
-## We recommended that you find the un-trimmed data and retry.</code></pre>
-<pre><code>## Warning: Removed 305 rows containing missing values (geom_errorbar).</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-8-1.png" width="816" /></p>
-<pre class="r"><code>all.days.prairie.appended.d1 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d1&quot; &amp; treatment %in% c(&quot;no_manure_strip&quot;, &quot;manured_strip&quot;))
-all.days.prairie.appended.d2 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d2&quot; &amp; treatment %in% c(&quot;no_manure_strip&quot;, &quot;manured_strip&quot;))
-
-plot_richness(all.days.prairie.appended.d1, x = &quot;day&quot;, color = &quot;treatment&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;))</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-9-1.png" width="816" /></p>
-<pre class="r"><code>plot_richness(all.days.prairie.appended.d2, x = &quot;day&quot;, color = &quot;treatment&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;))</code></pre>
-<p><img src="diversity_files/figure-html/unnamed-chunk-9-2.png" width="816" /></p>
-
-
-
+<pre class="r"><code>hist(sample_sums(phy), breaks = 100)</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
+<div id="get-a-list-of-asvs-from-manure-and-soil-before-manure-was-applied" class="section level3">
+<h3>Get a list of ASVs from manure and soil before manure was applied</h3>
+<pre class="r"><code>manure_otus &lt;- subset_samples(phy, matrix == &quot;manure&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T) 
+
+min(taxa_sums(manure_otus))</code></pre>
+<pre><code>## [1] 2</code></pre>
+<pre class="r"><code>cc &lt;- subset_samples(phy, treatment == &quot;no_manure_strip&quot; | day == &quot;b&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T) 
+
+min(taxa_sums(cc))</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>vvv_diag &lt;- venn(list(&quot;Manure_ASVs&quot; = row.names(otu_table(manure_otus)), &quot;Soil_ASVs&quot; = row.names(otu_table(cc))))</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>manure_persitors &lt;- attr(vvv_diag, &quot;intersections&quot;)$Manure_ASVs 
+manure_persitors</code></pre>
+<pre><code>##   [1] &quot;ASV_187&quot;   &quot;ASV_277&quot;   &quot;ASV_354&quot;   &quot;ASV_597&quot;   &quot;ASV_628&quot;  
+##   [6] &quot;ASV_633&quot;   &quot;ASV_639&quot;   &quot;ASV_650&quot;   &quot;ASV_670&quot;   &quot;ASV_683&quot;  
+##  [11] &quot;ASV_717&quot;   &quot;ASV_742&quot;   &quot;ASV_762&quot;   &quot;ASV_777&quot;   &quot;ASV_793&quot;  
+##  [16] &quot;ASV_820&quot;   &quot;ASV_823&quot;   &quot;ASV_854&quot;   &quot;ASV_879&quot;   &quot;ASV_889&quot;  
+##  [21] &quot;ASV_903&quot;   &quot;ASV_914&quot;   &quot;ASV_938&quot;   &quot;ASV_939&quot;   &quot;ASV_954&quot;  
+##  [26] &quot;ASV_957&quot;   &quot;ASV_968&quot;   &quot;ASV_973&quot;   &quot;ASV_1016&quot;  &quot;ASV_1022&quot; 
+##  [31] &quot;ASV_1072&quot;  &quot;ASV_1085&quot;  &quot;ASV_1109&quot;  &quot;ASV_1126&quot;  &quot;ASV_1166&quot; 
+##  [36] &quot;ASV_1205&quot;  &quot;ASV_1234&quot;  &quot;ASV_1256&quot;  &quot;ASV_1289&quot;  &quot;ASV_1303&quot; 
+##  [41] &quot;ASV_1354&quot;  &quot;ASV_1405&quot;  &quot;ASV_1417&quot;  &quot;ASV_1436&quot;  &quot;ASV_1439&quot; 
+##  [46] &quot;ASV_1486&quot;  &quot;ASV_1531&quot;  &quot;ASV_1533&quot;  &quot;ASV_1540&quot;  &quot;ASV_1563&quot; 
+##  [51] &quot;ASV_1564&quot;  &quot;ASV_1617&quot;  &quot;ASV_1638&quot;  &quot;ASV_1696&quot;  &quot;ASV_1701&quot; 
+##  [56] &quot;ASV_1732&quot;  &quot;ASV_1750&quot;  &quot;ASV_1824&quot;  &quot;ASV_1855&quot;  &quot;ASV_1859&quot; 
+##  [61] &quot;ASV_1863&quot;  &quot;ASV_1875&quot;  &quot;ASV_1887&quot;  &quot;ASV_1893&quot;  &quot;ASV_1896&quot; 
+##  [66] &quot;ASV_1902&quot;  &quot;ASV_1916&quot;  &quot;ASV_1965&quot;  &quot;ASV_1993&quot;  &quot;ASV_1995&quot; 
+##  [71] &quot;ASV_1998&quot;  &quot;ASV_2016&quot;  &quot;ASV_2034&quot;  &quot;ASV_2066&quot;  &quot;ASV_2069&quot; 
+##  [76] &quot;ASV_2117&quot;  &quot;ASV_2122&quot;  &quot;ASV_2139&quot;  &quot;ASV_2141&quot;  &quot;ASV_2178&quot; 
+##  [81] &quot;ASV_2189&quot;  &quot;ASV_2222&quot;  &quot;ASV_2248&quot;  &quot;ASV_2251&quot;  &quot;ASV_2261&quot; 
+##  [86] &quot;ASV_2268&quot;  &quot;ASV_2272&quot;  &quot;ASV_2296&quot;  &quot;ASV_2323&quot;  &quot;ASV_2358&quot; 
+##  [91] &quot;ASV_2416&quot;  &quot;ASV_2431&quot;  &quot;ASV_2496&quot;  &quot;ASV_2517&quot;  &quot;ASV_2518&quot; 
+##  [96] &quot;ASV_2533&quot;  &quot;ASV_2607&quot;  &quot;ASV_2631&quot;  &quot;ASV_2633&quot;  &quot;ASV_2642&quot; 
+## [101] &quot;ASV_2646&quot;  &quot;ASV_2678&quot;  &quot;ASV_2696&quot;  &quot;ASV_2723&quot;  &quot;ASV_2731&quot; 
+## [106] &quot;ASV_2755&quot;  &quot;ASV_2777&quot;  &quot;ASV_2843&quot;  &quot;ASV_2851&quot;  &quot;ASV_2882&quot; 
+## [111] &quot;ASV_2894&quot;  &quot;ASV_2925&quot;  &quot;ASV_2967&quot;  &quot;ASV_2974&quot;  &quot;ASV_3007&quot; 
+## [116] &quot;ASV_3029&quot;  &quot;ASV_3032&quot;  &quot;ASV_3049&quot;  &quot;ASV_3064&quot;  &quot;ASV_3079&quot; 
+## [121] &quot;ASV_3115&quot;  &quot;ASV_3118&quot;  &quot;ASV_3122&quot;  &quot;ASV_3221&quot;  &quot;ASV_3227&quot; 
+## [126] &quot;ASV_3228&quot;  &quot;ASV_3246&quot;  &quot;ASV_3280&quot;  &quot;ASV_3301&quot;  &quot;ASV_3350&quot; 
+## [131] &quot;ASV_3380&quot;  &quot;ASV_3385&quot;  &quot;ASV_3410&quot;  &quot;ASV_3421&quot;  &quot;ASV_3478&quot; 
+## [136] &quot;ASV_3486&quot;  &quot;ASV_3563&quot;  &quot;ASV_3566&quot;  &quot;ASV_3579&quot;  &quot;ASV_3618&quot; 
+## [141] &quot;ASV_3646&quot;  &quot;ASV_3663&quot;  &quot;ASV_3665&quot;  &quot;ASV_3747&quot;  &quot;ASV_3783&quot; 
+## [146] &quot;ASV_3821&quot;  &quot;ASV_3831&quot;  &quot;ASV_3847&quot;  &quot;ASV_3887&quot;  &quot;ASV_3895&quot; 
+## [151] &quot;ASV_3911&quot;  &quot;ASV_3913&quot;  &quot;ASV_3939&quot;  &quot;ASV_3940&quot;  &quot;ASV_3962&quot; 
+## [156] &quot;ASV_3982&quot;  &quot;ASV_3986&quot;  &quot;ASV_4002&quot;  &quot;ASV_4152&quot;  &quot;ASV_4154&quot; 
+## [161] &quot;ASV_4155&quot;  &quot;ASV_4193&quot;  &quot;ASV_4219&quot;  &quot;ASV_4220&quot;  &quot;ASV_4267&quot; 
+## [166] &quot;ASV_4303&quot;  &quot;ASV_4312&quot;  &quot;ASV_4353&quot;  &quot;ASV_4372&quot;  &quot;ASV_4465&quot; 
+## [171] &quot;ASV_4475&quot;  &quot;ASV_4490&quot;  &quot;ASV_4503&quot;  &quot;ASV_4504&quot;  &quot;ASV_4568&quot; 
+## [176] &quot;ASV_4602&quot;  &quot;ASV_4689&quot;  &quot;ASV_4721&quot;  &quot;ASV_4739&quot;  &quot;ASV_4755&quot; 
+## [181] &quot;ASV_4756&quot;  &quot;ASV_4810&quot;  &quot;ASV_4816&quot;  &quot;ASV_4817&quot;  &quot;ASV_4867&quot; 
+## [186] &quot;ASV_4881&quot;  &quot;ASV_4962&quot;  &quot;ASV_4973&quot;  &quot;ASV_4999&quot;  &quot;ASV_5038&quot; 
+## [191] &quot;ASV_5066&quot;  &quot;ASV_5115&quot;  &quot;ASV_5139&quot;  &quot;ASV_5162&quot;  &quot;ASV_5203&quot; 
+## [196] &quot;ASV_5204&quot;  &quot;ASV_5257&quot;  &quot;ASV_5286&quot;  &quot;ASV_5294&quot;  &quot;ASV_5301&quot; 
+## [201] &quot;ASV_5302&quot;  &quot;ASV_5314&quot;  &quot;ASV_5320&quot;  &quot;ASV_5390&quot;  &quot;ASV_5405&quot; 
+## [206] &quot;ASV_5411&quot;  &quot;ASV_5423&quot;  &quot;ASV_5508&quot;  &quot;ASV_5516&quot;  &quot;ASV_5557&quot; 
+## [211] &quot;ASV_5574&quot;  &quot;ASV_5594&quot;  &quot;ASV_5601&quot;  &quot;ASV_5620&quot;  &quot;ASV_5646&quot; 
+## [216] &quot;ASV_5665&quot;  &quot;ASV_5682&quot;  &quot;ASV_5688&quot;  &quot;ASV_5697&quot;  &quot;ASV_5728&quot; 
+## [221] &quot;ASV_5766&quot;  &quot;ASV_5783&quot;  &quot;ASV_5828&quot;  &quot;ASV_5856&quot;  &quot;ASV_5893&quot; 
+## [226] &quot;ASV_5895&quot;  &quot;ASV_5897&quot;  &quot;ASV_5909&quot;  &quot;ASV_5910&quot;  &quot;ASV_5911&quot; 
+## [231] &quot;ASV_5927&quot;  &quot;ASV_5933&quot;  &quot;ASV_5942&quot;  &quot;ASV_5943&quot;  &quot;ASV_5956&quot; 
+## [236] &quot;ASV_6011&quot;  &quot;ASV_6027&quot;  &quot;ASV_6053&quot;  &quot;ASV_6168&quot;  &quot;ASV_6215&quot; 
+## [241] &quot;ASV_6238&quot;  &quot;ASV_6251&quot;  &quot;ASV_6268&quot;  &quot;ASV_6310&quot;  &quot;ASV_6325&quot; 
+## [246] &quot;ASV_6335&quot;  &quot;ASV_6368&quot;  &quot;ASV_6433&quot;  &quot;ASV_6454&quot;  &quot;ASV_6579&quot; 
+## [251] &quot;ASV_6580&quot;  &quot;ASV_6581&quot;  &quot;ASV_6601&quot;  &quot;ASV_6614&quot;  &quot;ASV_6624&quot; 
+## [256] &quot;ASV_6636&quot;  &quot;ASV_6669&quot;  &quot;ASV_6725&quot;  &quot;ASV_6775&quot;  &quot;ASV_6777&quot; 
+## [261] &quot;ASV_6872&quot;  &quot;ASV_6877&quot;  &quot;ASV_6916&quot;  &quot;ASV_7013&quot;  &quot;ASV_7028&quot; 
+## [266] &quot;ASV_7029&quot;  &quot;ASV_7075&quot;  &quot;ASV_7130&quot;  &quot;ASV_7131&quot;  &quot;ASV_7153&quot; 
+## [271] &quot;ASV_7248&quot;  &quot;ASV_7291&quot;  &quot;ASV_7325&quot;  &quot;ASV_7359&quot;  &quot;ASV_7395&quot; 
+## [276] &quot;ASV_7452&quot;  &quot;ASV_7454&quot;  &quot;ASV_7462&quot;  &quot;ASV_7504&quot;  &quot;ASV_7529&quot; 
+## [281] &quot;ASV_7530&quot;  &quot;ASV_7536&quot;  &quot;ASV_7541&quot;  &quot;ASV_7557&quot;  &quot;ASV_7560&quot; 
+## [286] &quot;ASV_7586&quot;  &quot;ASV_7646&quot;  &quot;ASV_7648&quot;  &quot;ASV_7733&quot;  &quot;ASV_7749&quot; 
+## [291] &quot;ASV_7750&quot;  &quot;ASV_7817&quot;  &quot;ASV_7826&quot;  &quot;ASV_7834&quot;  &quot;ASV_7858&quot; 
+## [296] &quot;ASV_7861&quot;  &quot;ASV_7865&quot;  &quot;ASV_7869&quot;  &quot;ASV_7926&quot;  &quot;ASV_7955&quot; 
+## [301] &quot;ASV_7956&quot;  &quot;ASV_8008&quot;  &quot;ASV_8019&quot;  &quot;ASV_8028&quot;  &quot;ASV_8049&quot; 
+## [306] &quot;ASV_8050&quot;  &quot;ASV_8068&quot;  &quot;ASV_8070&quot;  &quot;ASV_8071&quot;  &quot;ASV_8108&quot; 
+## [311] &quot;ASV_8156&quot;  &quot;ASV_8158&quot;  &quot;ASV_8197&quot;  &quot;ASV_8198&quot;  &quot;ASV_8242&quot; 
+## [316] &quot;ASV_8243&quot;  &quot;ASV_8250&quot;  &quot;ASV_8252&quot;  &quot;ASV_8265&quot;  &quot;ASV_8309&quot; 
+## [321] &quot;ASV_8317&quot;  &quot;ASV_8340&quot;  &quot;ASV_8341&quot;  &quot;ASV_8342&quot;  &quot;ASV_8357&quot; 
+## [326] &quot;ASV_8378&quot;  &quot;ASV_8396&quot;  &quot;ASV_8420&quot;  &quot;ASV_8453&quot;  &quot;ASV_8454&quot; 
+## [331] &quot;ASV_8519&quot;  &quot;ASV_8599&quot;  &quot;ASV_8636&quot;  &quot;ASV_8670&quot;  &quot;ASV_8759&quot; 
+## [336] &quot;ASV_8760&quot;  &quot;ASV_8761&quot;  &quot;ASV_8787&quot;  &quot;ASV_8810&quot;  &quot;ASV_8825&quot; 
+## [341] &quot;ASV_8827&quot;  &quot;ASV_8847&quot;  &quot;ASV_8909&quot;  &quot;ASV_8910&quot;  &quot;ASV_8930&quot; 
+## [346] &quot;ASV_9061&quot;  &quot;ASV_9113&quot;  &quot;ASV_9166&quot;  &quot;ASV_9210&quot;  &quot;ASV_9212&quot; 
+## [351] &quot;ASV_9231&quot;  &quot;ASV_9303&quot;  &quot;ASV_9423&quot;  &quot;ASV_9534&quot;  &quot;ASV_9550&quot; 
+## [356] &quot;ASV_9590&quot;  &quot;ASV_9609&quot;  &quot;ASV_9694&quot;  &quot;ASV_9697&quot;  &quot;ASV_9793&quot; 
+## [361] &quot;ASV_9795&quot;  &quot;ASV_9866&quot;  &quot;ASV_9868&quot;  &quot;ASV_9894&quot;  &quot;ASV_9988&quot; 
+## [366] &quot;ASV_10023&quot; &quot;ASV_10024&quot; &quot;ASV_10028&quot; &quot;ASV_10030&quot; &quot;ASV_10107&quot;
+## [371] &quot;ASV_10116&quot; &quot;ASV_10140&quot; &quot;ASV_10141&quot; &quot;ASV_10142&quot; &quot;ASV_10164&quot;
+## [376] &quot;ASV_10207&quot; &quot;ASV_10212&quot; &quot;ASV_10249&quot; &quot;ASV_10250&quot; &quot;ASV_10254&quot;
+## [381] &quot;ASV_10293&quot; &quot;ASV_10326&quot; &quot;ASV_10345&quot; &quot;ASV_10359&quot; &quot;ASV_10402&quot;
+## [386] &quot;ASV_10403&quot; &quot;ASV_10481&quot; &quot;ASV_10504&quot; &quot;ASV_10518&quot; &quot;ASV_10574&quot;
+## [391] &quot;ASV_10659&quot; &quot;ASV_10696&quot; &quot;ASV_10731&quot; &quot;ASV_10770&quot; &quot;ASV_10771&quot;
+## [396] &quot;ASV_10773&quot; &quot;ASV_10774&quot; &quot;ASV_10803&quot; &quot;ASV_10840&quot; &quot;ASV_10878&quot;
+## [401] &quot;ASV_10952&quot; &quot;ASV_11008&quot; &quot;ASV_11016&quot; &quot;ASV_11050&quot; &quot;ASV_11055&quot;
+## [406] &quot;ASV_11140&quot; &quot;ASV_11149&quot; &quot;ASV_11166&quot; &quot;ASV_11202&quot; &quot;ASV_11209&quot;
+## [411] &quot;ASV_11211&quot; &quot;ASV_11242&quot; &quot;ASV_11247&quot; &quot;ASV_11288&quot; &quot;ASV_11373&quot;
+## [416] &quot;ASV_11493&quot; &quot;ASV_11495&quot; &quot;ASV_11535&quot; &quot;ASV_11536&quot; &quot;ASV_11537&quot;
+## [421] &quot;ASV_11542&quot; &quot;ASV_11625&quot; &quot;ASV_11628&quot; &quot;ASV_11670&quot; &quot;ASV_11712&quot;
+## [426] &quot;ASV_11816&quot; &quot;ASV_11817&quot; &quot;ASV_11819&quot; &quot;ASV_11840&quot; &quot;ASV_11902&quot;
+## [431] &quot;ASV_11954&quot; &quot;ASV_12009&quot; &quot;ASV_12033&quot; &quot;ASV_12035&quot; &quot;ASV_12109&quot;
+## [436] &quot;ASV_12110&quot; &quot;ASV_12111&quot; &quot;ASV_12158&quot; &quot;ASV_12206&quot; &quot;ASV_12207&quot;
+## [441] &quot;ASV_12209&quot; &quot;ASV_12210&quot; &quot;ASV_12215&quot; &quot;ASV_12242&quot; &quot;ASV_12331&quot;
+## [446] &quot;ASV_12338&quot; &quot;ASV_12579&quot; &quot;ASV_12623&quot; &quot;ASV_12692&quot; &quot;ASV_12693&quot;
+## [451] &quot;ASV_12749&quot; &quot;ASV_12798&quot; &quot;ASV_12799&quot; &quot;ASV_12801&quot; &quot;ASV_12821&quot;
+## [456] &quot;ASV_12822&quot; &quot;ASV_12823&quot; &quot;ASV_12869&quot; &quot;ASV_12870&quot; &quot;ASV_12926&quot;
+## [461] &quot;ASV_13029&quot; &quot;ASV_13228&quot; &quot;ASV_13290&quot; &quot;ASV_13292&quot; &quot;ASV_13294&quot;
+## [466] &quot;ASV_13314&quot; &quot;ASV_13405&quot; &quot;ASV_13416&quot; &quot;ASV_13531&quot; &quot;ASV_13532&quot;
+## [471] &quot;ASV_13533&quot; &quot;ASV_13554&quot; &quot;ASV_13678&quot; &quot;ASV_13679&quot; &quot;ASV_13680&quot;
+## [476] &quot;ASV_13698&quot; &quot;ASV_13699&quot; &quot;ASV_13700&quot; &quot;ASV_13838&quot; &quot;ASV_13839&quot;
+## [481] &quot;ASV_13895&quot; &quot;ASV_13973&quot; &quot;ASV_14255&quot; &quot;ASV_14329&quot; &quot;ASV_14398&quot;
+## [486] &quot;ASV_14406&quot; &quot;ASV_14410&quot; &quot;ASV_14467&quot; &quot;ASV_14471&quot; &quot;ASV_14533&quot;
+## [491] &quot;ASV_14552&quot; &quot;ASV_14553&quot; &quot;ASV_14554&quot; &quot;ASV_14579&quot; &quot;ASV_14611&quot;
+## [496] &quot;ASV_14694&quot; &quot;ASV_14695&quot; &quot;ASV_14696&quot; &quot;ASV_14708&quot; &quot;ASV_14711&quot;
+## [501] &quot;ASV_14867&quot; &quot;ASV_14967&quot; &quot;ASV_14972&quot; &quot;ASV_15046&quot; &quot;ASV_15048&quot;
+## [506] &quot;ASV_15051&quot; &quot;ASV_15069&quot; &quot;ASV_15070&quot; &quot;ASV_15071&quot; &quot;ASV_15245&quot;
+## [511] &quot;ASV_15246&quot; &quot;ASV_15247&quot; &quot;ASV_15248&quot; &quot;ASV_15335&quot; &quot;ASV_15411&quot;
+## [516] &quot;ASV_15412&quot; &quot;ASV_15434&quot; &quot;ASV_15534&quot; &quot;ASV_15628&quot; &quot;ASV_15630&quot;
+## [521] &quot;ASV_15631&quot; &quot;ASV_15856&quot; &quot;ASV_15875&quot; &quot;ASV_16087&quot; &quot;ASV_16114&quot;
+## [526] &quot;ASV_16305&quot; &quot;ASV_16330&quot; &quot;ASV_16331&quot; &quot;ASV_16332&quot; &quot;ASV_16579&quot;
+## [531] &quot;ASV_16667&quot; &quot;ASV_16774&quot; &quot;ASV_16775&quot; &quot;ASV_16810&quot; &quot;ASV_17039&quot;
+## [536] &quot;ASV_17040&quot; &quot;ASV_17041&quot; &quot;ASV_17113&quot; &quot;ASV_17289&quot; &quot;ASV_17290&quot;
+## [541] &quot;ASV_17352&quot; &quot;ASV_17551&quot; &quot;ASV_17552&quot; &quot;ASV_17553&quot; &quot;ASV_17555&quot;
+## [546] &quot;ASV_17725&quot; &quot;ASV_17730&quot; &quot;ASV_17899&quot; &quot;ASV_17900&quot; &quot;ASV_17901&quot;
+## [551] &quot;ASV_18030&quot; &quot;ASV_18031&quot; &quot;ASV_18032&quot; &quot;ASV_18157&quot; &quot;ASV_18194&quot;
+## [556] &quot;ASV_18198&quot; &quot;ASV_18199&quot; &quot;ASV_18200&quot; &quot;ASV_18319&quot; &quot;ASV_18444&quot;
+## [561] &quot;ASV_18445&quot; &quot;ASV_18490&quot; &quot;ASV_18491&quot; &quot;ASV_18492&quot; &quot;ASV_18808&quot;
+## [566] &quot;ASV_18809&quot; &quot;ASV_18856&quot; &quot;ASV_19007&quot; &quot;ASV_19136&quot; &quot;ASV_19137&quot;
+## [571] &quot;ASV_19181&quot; &quot;ASV_19194&quot; &quot;ASV_19349&quot; &quot;ASV_19504&quot; &quot;ASV_19505&quot;
+## [576] &quot;ASV_19741&quot; &quot;ASV_19743&quot; &quot;ASV_19744&quot; &quot;ASV_19868&quot; &quot;ASV_19870&quot;
+## [581] &quot;ASV_19872&quot; &quot;ASV_19873&quot; &quot;ASV_19946&quot; &quot;ASV_19948&quot; &quot;ASV_19951&quot;
+## [586] &quot;ASV_20135&quot; &quot;ASV_20143&quot; &quot;ASV_20144&quot; &quot;ASV_20301&quot; &quot;ASV_20361&quot;
+## [591] &quot;ASV_20554&quot; &quot;ASV_20562&quot; &quot;ASV_20735&quot; &quot;ASV_20739&quot; &quot;ASV_20740&quot;
+## [596] &quot;ASV_20804&quot; &quot;ASV_20809&quot; &quot;ASV_21012&quot; &quot;ASV_21024&quot; &quot;ASV_21187&quot;
+## [601] &quot;ASV_21272&quot; &quot;ASV_21273&quot; &quot;ASV_21478&quot; &quot;ASV_21489&quot; &quot;ASV_21667&quot;
+## [606] &quot;ASV_21669&quot; &quot;ASV_21670&quot; &quot;ASV_21745&quot; &quot;ASV_21746&quot; &quot;ASV_21747&quot;
+## [611] &quot;ASV_21748&quot; &quot;ASV_21915&quot; &quot;ASV_21992&quot; &quot;ASV_22007&quot; &quot;ASV_22199&quot;
+## [616] &quot;ASV_22200&quot; &quot;ASV_22201&quot; &quot;ASV_22202&quot; &quot;ASV_22302&quot; &quot;ASV_22303&quot;
+## [621] &quot;ASV_22304&quot; &quot;ASV_22305&quot; &quot;ASV_22559&quot; &quot;ASV_22560&quot; &quot;ASV_22887&quot;
+## [626] &quot;ASV_22888&quot; &quot;ASV_22889&quot; &quot;ASV_22890&quot; &quot;ASV_22891&quot; &quot;ASV_23131&quot;
+## [631] &quot;ASV_23135&quot; &quot;ASV_23143&quot; &quot;ASV_23147&quot; &quot;ASV_23358&quot; &quot;ASV_23363&quot;
+## [636] &quot;ASV_23396&quot; &quot;ASV_23481&quot; &quot;ASV_23491&quot; &quot;ASV_23492&quot; &quot;ASV_23493&quot;
+## [641] &quot;ASV_23494&quot; &quot;ASV_23495&quot; &quot;ASV_23496&quot; &quot;ASV_23497&quot; &quot;ASV_23498&quot;
+## [646] &quot;ASV_23777&quot; &quot;ASV_23778&quot; &quot;ASV_24035&quot; &quot;ASV_24180&quot; &quot;ASV_24181&quot;
+## [651] &quot;ASV_24182&quot; &quot;ASV_24183&quot; &quot;ASV_24379&quot; &quot;ASV_24479&quot; &quot;ASV_24727&quot;
+## [656] &quot;ASV_24735&quot; &quot;ASV_24795&quot; &quot;ASV_24900&quot; &quot;ASV_24901&quot; &quot;ASV_24902&quot;
+## [661] &quot;ASV_24903&quot; &quot;ASV_24904&quot; &quot;ASV_24905&quot; &quot;ASV_24906&quot; &quot;ASV_25454&quot;
+## [666] &quot;ASV_25461&quot; &quot;ASV_25509&quot; &quot;ASV_25638&quot; &quot;ASV_25639&quot; &quot;ASV_25640&quot;
+## [671] &quot;ASV_25641&quot; &quot;ASV_25642&quot; &quot;ASV_25979&quot; &quot;ASV_25980&quot; &quot;ASV_26274&quot;
+## [676] &quot;ASV_26276&quot; &quot;ASV_26424&quot; &quot;ASV_26450&quot; &quot;ASV_26470&quot; &quot;ASV_26487&quot;
+## [681] &quot;ASV_26488&quot; &quot;ASV_26489&quot; &quot;ASV_26490&quot; &quot;ASV_26491&quot; &quot;ASV_26895&quot;
+## [686] &quot;ASV_27373&quot; &quot;ASV_27445&quot; &quot;ASV_27446&quot; &quot;ASV_27878&quot; &quot;ASV_27894&quot;
+## [691] &quot;ASV_28225&quot; &quot;ASV_28227&quot; &quot;ASV_28229&quot; &quot;ASV_28468&quot; &quot;ASV_28513&quot;
+## [696] &quot;ASV_28514&quot; &quot;ASV_28515&quot; &quot;ASV_28516&quot; &quot;ASV_28517&quot; &quot;ASV_28518&quot;
+## [701] &quot;ASV_28519&quot; &quot;ASV_29044&quot; &quot;ASV_29423&quot; &quot;ASV_29427&quot; &quot;ASV_29428&quot;
+## [706] &quot;ASV_29429&quot; &quot;ASV_29431&quot; &quot;ASV_29732&quot; &quot;ASV_29733&quot; &quot;ASV_29734&quot;
+## [711] &quot;ASV_29735&quot; &quot;ASV_29736&quot; &quot;ASV_29737&quot; &quot;ASV_29738&quot; &quot;ASV_30706&quot;
+## [716] &quot;ASV_30713&quot; &quot;ASV_30722&quot; &quot;ASV_30774&quot; &quot;ASV_31076&quot; &quot;ASV_31077&quot;
+## [721] &quot;ASV_31078&quot; &quot;ASV_31079&quot; &quot;ASV_31080&quot; &quot;ASV_31081&quot; &quot;ASV_31082&quot;
+## [726] &quot;ASV_31547&quot; &quot;ASV_31709&quot; &quot;ASV_32160&quot; &quot;ASV_32172&quot; &quot;ASV_32610&quot;
+## [731] &quot;ASV_32611&quot; &quot;ASV_32612&quot; &quot;ASV_32613&quot; &quot;ASV_32614&quot; &quot;ASV_32615&quot;
+## [736] &quot;ASV_32616&quot; &quot;ASV_33333&quot; &quot;ASV_33334&quot; &quot;ASV_33335&quot; &quot;ASV_33866&quot;
+## [741] &quot;ASV_34444&quot; &quot;ASV_34445&quot; &quot;ASV_34446&quot; &quot;ASV_34447&quot; &quot;ASV_34448&quot;
+## [746] &quot;ASV_34449&quot; &quot;ASV_34450&quot; &quot;ASV_34451&quot; &quot;ASV_34452&quot; &quot;ASV_35268&quot;
+## [751] &quot;ASV_35867&quot; &quot;ASV_35887&quot; &quot;ASV_35894&quot; &quot;ASV_35897&quot; &quot;ASV_35898&quot;
+## [756] &quot;ASV_36634&quot; &quot;ASV_36635&quot; &quot;ASV_36636&quot; &quot;ASV_36637&quot; &quot;ASV_36638&quot;
+## [761] &quot;ASV_36639&quot; &quot;ASV_36640&quot; &quot;ASV_37544&quot; &quot;ASV_37545&quot; &quot;ASV_38994&quot;
+## [766] &quot;ASV_39024&quot; &quot;ASV_39025&quot; &quot;ASV_39026&quot; &quot;ASV_39027&quot; &quot;ASV_39028&quot;
+## [771] &quot;ASV_39029&quot; &quot;ASV_39030&quot; &quot;ASV_39031&quot; &quot;ASV_39032&quot; &quot;ASV_40087&quot;
+## [776] &quot;ASV_40088&quot; &quot;ASV_42187&quot; &quot;ASV_42188&quot; &quot;ASV_42189&quot; &quot;ASV_42190&quot;
+## [781] &quot;ASV_42191&quot; &quot;ASV_42192&quot; &quot;ASV_42193&quot; &quot;ASV_42194&quot; &quot;ASV_42195&quot;
+## [786] &quot;ASV_42196&quot; &quot;ASV_42197&quot; &quot;ASV_42198&quot; &quot;ASV_42199&quot; &quot;ASV_42200&quot;
+## [791] &quot;ASV_42201&quot; &quot;ASV_42202&quot; &quot;ASV_42203&quot; &quot;ASV_42204&quot; &quot;ASV_43504&quot;
+## [796] &quot;ASV_43510&quot; &quot;ASV_44542&quot; &quot;ASV_44545&quot; &quot;ASV_46057&quot; &quot;ASV_46058&quot;
+## [801] &quot;ASV_46059&quot; &quot;ASV_46060&quot; &quot;ASV_46061&quot; &quot;ASV_46062&quot; &quot;ASV_46063&quot;
+## [806] &quot;ASV_46064&quot; &quot;ASV_46065&quot; &quot;ASV_46066&quot; &quot;ASV_46067&quot; &quot;ASV_46068&quot;
+## [811] &quot;ASV_46069&quot; &quot;ASV_46070&quot; &quot;ASV_46071&quot; &quot;ASV_46072&quot; &quot;ASV_46073&quot;
+## [816] &quot;ASV_46074&quot; &quot;ASV_46075&quot; &quot;ASV_46076&quot; &quot;ASV_46077&quot; &quot;ASV_46078&quot;
+## [821] &quot;ASV_46079&quot; &quot;ASV_47733&quot; &quot;ASV_47747&quot; &quot;ASV_49026&quot; &quot;ASV_49066&quot;
+## [826] &quot;ASV_50630&quot; &quot;ASV_51026&quot; &quot;ASV_51027&quot; &quot;ASV_51028&quot; &quot;ASV_51029&quot;
+## [831] &quot;ASV_51030&quot; &quot;ASV_51031&quot; &quot;ASV_51032&quot; &quot;ASV_51033&quot; &quot;ASV_51034&quot;
+## [836] &quot;ASV_51035&quot; &quot;ASV_51036&quot; &quot;ASV_51037&quot; &quot;ASV_51038&quot; &quot;ASV_51039&quot;
+## [841] &quot;ASV_51040&quot; &quot;ASV_51041&quot; &quot;ASV_51042&quot; &quot;ASV_51043&quot; &quot;ASV_51044&quot;
+## [846] &quot;ASV_51045&quot; &quot;ASV_51046&quot; &quot;ASV_51047&quot; &quot;ASV_51048&quot; &quot;ASV_51049&quot;
+## [851] &quot;ASV_51050&quot; &quot;ASV_51051&quot; &quot;ASV_51052&quot; &quot;ASV_51053&quot; &quot;ASV_51054&quot;
+## [856] &quot;ASV_51055&quot; &quot;ASV_51056&quot; &quot;ASV_51057&quot; &quot;ASV_51058&quot; &quot;ASV_51059&quot;
+## [861] &quot;ASV_54823&quot; &quot;ASV_54883&quot; &quot;ASV_57628&quot; &quot;ASV_57629&quot; &quot;ASV_57630&quot;
+## [866] &quot;ASV_57631&quot; &quot;ASV_57632&quot; &quot;ASV_57633&quot; &quot;ASV_57634&quot; &quot;ASV_57635&quot;
+## [871] &quot;ASV_57636&quot; &quot;ASV_57637&quot; &quot;ASV_57638&quot; &quot;ASV_57639&quot; &quot;ASV_57640&quot;
+## [876] &quot;ASV_57641&quot; &quot;ASV_57642&quot; &quot;ASV_57643&quot; &quot;ASV_57644&quot; &quot;ASV_57645&quot;
+## [881] &quot;ASV_57646&quot; &quot;ASV_57647&quot; &quot;ASV_57648&quot; &quot;ASV_57649&quot; &quot;ASV_57650&quot;
+## [886] &quot;ASV_57651&quot; &quot;ASV_57652&quot; &quot;ASV_57653&quot; &quot;ASV_57654&quot; &quot;ASV_57655&quot;
+## [891] &quot;ASV_57656&quot; &quot;ASV_57657&quot; &quot;ASV_57658&quot; &quot;ASV_57659&quot; &quot;ASV_57660&quot;
+## [896] &quot;ASV_57661&quot; &quot;ASV_57662&quot; &quot;ASV_66560&quot; &quot;ASV_66561&quot; &quot;ASV_66562&quot;
+## [901] &quot;ASV_66563&quot; &quot;ASV_66564&quot; &quot;ASV_66565&quot; &quot;ASV_66566&quot; &quot;ASV_66567&quot;
+## [906] &quot;ASV_66568&quot; &quot;ASV_66569&quot; &quot;ASV_66570&quot; &quot;ASV_66571&quot; &quot;ASV_66572&quot;
+## [911] &quot;ASV_66573&quot; &quot;ASV_66574&quot; &quot;ASV_66575&quot; &quot;ASV_66576&quot; &quot;ASV_66577&quot;
+## [916] &quot;ASV_66578&quot; &quot;ASV_66579&quot; &quot;ASV_66580&quot; &quot;ASV_66581&quot; &quot;ASV_66582&quot;
+## [921] &quot;ASV_66583&quot; &quot;ASV_66584&quot; &quot;ASV_66585&quot; &quot;ASV_66586&quot; &quot;ASV_66587&quot;
+## [926] &quot;ASV_66588&quot; &quot;ASV_66589&quot; &quot;ASV_66590&quot; &quot;ASV_66591&quot; &quot;ASV_66592&quot;
+## [931] &quot;ASV_66593&quot; &quot;ASV_66594&quot; &quot;ASV_66595&quot; &quot;ASV_66596&quot; &quot;ASV_66597&quot;
+## [936] &quot;ASV_66598&quot; &quot;ASV_66599&quot; &quot;ASV_66600&quot; &quot;ASV_66601&quot; &quot;ASV_66602&quot;
+## [941] &quot;ASV_66603&quot; &quot;ASV_66604&quot; &quot;ASV_66605&quot; &quot;ASV_66606&quot; &quot;ASV_66607&quot;
+## [946] &quot;ASV_76855&quot; &quot;ASV_76856&quot; &quot;ASV_76857&quot; &quot;ASV_76858&quot; &quot;ASV_76859&quot;
+## [951] &quot;ASV_76860&quot; &quot;ASV_76861&quot; &quot;ASV_76862&quot; &quot;ASV_76863&quot; &quot;ASV_76864&quot;
+## [956] &quot;ASV_76865&quot; &quot;ASV_76866&quot; &quot;ASV_76867&quot; &quot;ASV_76868&quot; &quot;ASV_76869&quot;
+## [961] &quot;ASV_76870&quot; &quot;ASV_76871&quot; &quot;ASV_76872&quot; &quot;ASV_76873&quot; &quot;ASV_76874&quot;
+## [966] &quot;ASV_76875&quot; &quot;ASV_76876&quot; &quot;ASV_76877&quot; &quot;ASV_76878&quot; &quot;ASV_76879&quot;
+## [971] &quot;ASV_76880&quot; &quot;ASV_76881&quot; &quot;ASV_76882&quot; &quot;ASV_76883&quot; &quot;ASV_76884&quot;
+## [976] &quot;ASV_76885&quot; &quot;ASV_76886&quot; &quot;ASV_76887&quot; &quot;ASV_76888&quot; &quot;ASV_76889&quot;
+## [981] &quot;ASV_76890&quot;</code></pre>
+<!-- ### Find ASVs from manure that are not present in any soil baseline sample -->
+<!-- ```{r} -->
+<!-- #v_diag <- venn(list("Manure_ASVs" = aa$manure, "Soil_ASVs" = aa$soil)) -->
+<!-- just_manure_ASVs <- attr(vvv_diag, "intersections")$Manure_ASVs -->
+<!-- ``` -->
 </div>
+<div id="plot-relative-abundance-of-only-manure-associated-asvs" class="section level3">
+<h3>Plot relative abundance of only manure associated ASVs</h3>
+<pre class="r"><code># Check reads, I was under the impression that all samples had at least 10k
+phy.OTU &lt;- OTU_to_column(phy)
+manure.phy &lt;- subset_samples(phy.OTU, matrix == &quot;soil&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T)
+
+min(taxa_sums(manure.phy))</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="r"><code>persistors.phy &lt;- subset_taxa(manure.phy, OTUID %in% manure_persitors) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 5, T)
+
+min(taxa_sums(persistors.phy))</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>hist(taxa_sums(persistors.phy), breaks = 1000)</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<pre class="r"><code>rela.persistors.phy &lt;- persistors.phy %&gt;%
+  transform_sample_counts(function(x) x / sum(x))
+melted.manure.persistors &lt;- psmelt(rela.persistors.phy)
+colnames(melted.manure.persistors)</code></pre>
+<pre><code>##  [1] &quot;OTU&quot;              &quot;Sample&quot;           &quot;Abundance&quot;       
+##  [4] &quot;id&quot;               &quot;PI&quot;               &quot;matrix&quot;          
+##  [7] &quot;plot&quot;             &quot;treatment&quot;        &quot;day&quot;             
+## [10] &quot;depth&quot;            &quot;in_plot_location&quot; &quot;block&quot;           
+## [13] &quot;runoff_sample&quot;    &quot;Vegetation&quot;       &quot;Kingdom&quot;         
+## [16] &quot;Phylum&quot;           &quot;Class&quot;            &quot;Order&quot;           
+## [19] &quot;Family&quot;           &quot;Genus&quot;            &quot;OTUID&quot;</code></pre>
+<pre class="r"><code>p &lt;- ggplot(melted.manure.persistors, aes(x = treatment, y = Abundance)) + 
+  geom_col(aes(fill = Phylum), width = 0.7)
+p +
+  facet_grid(Vegetation~day)</code></pre>
+<pre><code>## Warning: Removed 64315 rows containing missing values (position_stack).</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>crop &lt;- melted.manure.persistors %&gt;%
+  filter(Vegetation == &quot;Crop&quot;, treatment %in% c(&quot;manured_strip&quot;, &quot;manured_control&quot;))
+pp &lt;- ggplot(crop, aes(x = treatment, y = Abundance)) + 
+  geom_col(aes(fill = Phylum), width = 0.7)
+pp +
+  facet_grid(in_plot_location~day)</code></pre>
+<pre><code>## Warning: Removed 15960 rows containing missing values (position_stack).</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+
+
+
 
 </div>
 
