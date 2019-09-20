@@ -10,10 +10,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Jared Flater" />
+<meta name="author" content="Jared" />
 
 
-<title>index</title>
+<title>Analysis of WORLE 2017 soils and water 16s rRNA</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -293,14 +293,68 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">index</h1>
-<h4 class="author">Jared Flater</h4>
-<h4 class="date">9/11/2019</h4>
+<h1 class="title toc-ignore">Analysis of WORLE 2017 soils and water 16s rRNA</h1>
+<h4 class="author">Jared</h4>
+<h4 class="date">6/20/2019</h4>
 
 </div>
 
 
-<p>Landing page for my website.</p>
+<div id="first-we-read-in-the-data-a-r-data-structure-of-the-phyloseq-object" class="section level4">
+<h4>First we read in the data, a R data structure of the phyloseq object</h4>
+<pre class="r"><code># source functions
+source(&quot;code/functions.R&quot;)</code></pre>
+<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)
+colnames(sample_data(phy))</code></pre>
+<pre><code>##  [1] &quot;id&quot;               &quot;PI&quot;               &quot;matrix&quot;          
+##  [4] &quot;plot&quot;             &quot;treatment&quot;        &quot;day&quot;             
+##  [7] &quot;depth&quot;            &quot;in_plot_location&quot; &quot;block&quot;           
+## [10] &quot;runoff_sample&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$day)</code></pre>
+<pre><code>## [1] &quot;0&quot;   &quot;b&quot;   &quot;t0&quot;  &quot;t14&quot; &quot;t2&quot;  &quot;t21&quot; &quot;t42&quot;</code></pre>
+<pre class="r"><code>hist(sample_sums(phy), breaks = 100)</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="get-a-list-of-asvs-from-manure-and-soil-before-manure-was-applied" class="section level3">
+<h3>Get a list of ASVs from manure and soil before manure was applied</h3>
+<pre class="r"><code>manure_otus &lt;- subset_samples(phy, matrix == &quot;manure&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T) %&gt;%
+  otu_table() %&gt;%
+  rownames()
+
+cc &lt;- subset_samples(phy, treatment == &quot;no_manure_strip&quot; | day == &quot;b&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T) %&gt;%
+  otu_table() %&gt;%
+  rownames()
+
+vvv_diag &lt;- venn(list(&quot;Manure_ASVs&quot; = manure_otus, &quot;Soil_ASVs&quot; = cc))</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code>manure_persitors &lt;- attr(vvv_diag, &quot;intersections&quot;)$Manure_ASVs </code></pre>
+</div>
+<div id="plot-relative-abundance-of-only-manure-associated-asvs" class="section level3">
+<h3>Plot relative abundance of only manure associated ASVs</h3>
+<pre class="r"><code># Check reads, I was under the impression that all samples had at least 10k
+phy.OTU &lt;- OTU_to_column(phy)
+manure.phy &lt;- subset_samples(phy.OTU, matrix == &quot;soil&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T) 
+
+persistors.phy &lt;- subset_taxa(manure.phy, OTUID %in% manure_persitors) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 5, T) 
+persistors.phy</code></pre>
+<pre><code>## phyloseq-class experiment-level object
+## otu_table()   OTU Table:         [ 95 taxa and 804 samples ]
+## sample_data() Sample Data:       [ 804 samples by 10 sample variables ]
+## tax_table()   Taxonomy Table:    [ 95 taxa by 7 taxonomic ranks ]</code></pre>
+<pre class="r"><code>min(taxa_sums(persistors.phy))</code></pre>
+<pre><code>## [1] 5</code></pre>
+<pre class="r"><code>max(taxa_sums(persistors.phy))</code></pre>
+<pre><code>## [1] 1164</code></pre>
+</div>
+<div id="trying-to-get-a-good-plot-of-the-abundance-of-manure-associated-asvs" class="section level3">
+<h3>Trying to get a good plot of the abundance of manure associated ASVs</h3>
+<pre class="r"><code>plot_bar(persistors.phy, x = &quot;treatment&quot;, y = &quot;Abundance&quot;)</code></pre>
+<p><img src="manure_associated_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
 
 
 

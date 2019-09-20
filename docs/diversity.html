@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>WORLE rainfall simulation bacterial diversity</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/lumen.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 54px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h2 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h3 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h4 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h5 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.section h6 {
+  padding-top: 59px;
+  margin-top: -59px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">WORLE Data Analysis</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Index</a>
+</li>
+<li>
+  <a href="manure_associated.html">Manure-associated</a>
+</li>
+<li>
+  <a href="diversity.html">Diversity</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">WORLE rainfall simulation bacterial diversity</h1>
+
+</div>
+
+
+<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)</code></pre>
+<pre class="r"><code>data &lt;- data.frame(sample_data(phy)) %&gt;%
+  filter(matrix == &quot;soil&quot;) %&gt;%
+  mutate(Vegetation = case_when(in_plot_location %in% c(&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;, &quot;s4&quot;) ~ &quot;Crop&quot;,
+                                in_plot_location %in% c(&quot;s6&quot;, &quot;s7&quot;, &quot;s8&quot;, &quot;s9&quot;) ~ &quot;Prairie&quot;,
+                                TRUE ~ &quot;Border&quot;))
+
+all_data &lt;- data.frame(sample_data(phy)) %&gt;%
+  full_join(data)</code></pre>
+<pre><code>## Joining, by = c(&quot;id&quot;, &quot;PI&quot;, &quot;matrix&quot;, &quot;plot&quot;, &quot;treatment&quot;, &quot;day&quot;, &quot;depth&quot;, &quot;in_plot_location&quot;, &quot;block&quot;, &quot;runoff_sample&quot;)</code></pre>
+<pre class="r"><code>all_data &lt;- all_data %&gt;%
+  mutate(day = replace(day, day == &#39;t2&#39;, &quot;t02&quot;))
+
+sample_names(phy)</code></pre>
+<pre><code>##   [1] &quot;Comp-from-P8-7-10-26-17&quot; &quot;P1-1&quot;                   
+##   [3] &quot;P1-3&quot;                    &quot;P1-5&quot;                   
+##   [5] &quot;P1-s1-d1-b&quot;              &quot;P1-s1-d1-t0&quot;            
+##   [7] &quot;P1-s1-d1-t14&quot;            &quot;P1-s1-d1-t2&quot;            
+##   [9] &quot;P1-s1-d2-t2&quot;             &quot;P1-s1-d1-t21&quot;           
+##  [11] &quot;P1-s1-d1-t42&quot;            &quot;P1-s1-d2-b&quot;             
+##  [13] &quot;P1-s1-d2-t0&quot;             &quot;P1-s1-d2-t14&quot;           
+##  [15] &quot;P1-s1-d2-t21&quot;            &quot;P1-s1-d2-t42&quot;           
+##  [17] &quot;P1-s2-d1-b&quot;              &quot;P1-s2-d1-t0&quot;            
+##  [19] &quot;P1-s2-d1-t14&quot;            &quot;P1-s2-d1-t2&quot;            
+##  [21] &quot;P1-s2-d2-t2&quot;             &quot;P1-s2-d1-t21&quot;           
+##  [23] &quot;P1-s2-d2-b&quot;              &quot;P1-s2-d2-t0&quot;            
+##  [25] &quot;P1-s2-d2-t14&quot;            &quot;P1-s2-d2-t21&quot;           
+##  [27] &quot;P1-s2-d2-t42&quot;            &quot;P1-s3-d1-b&quot;             
+##  [29] &quot;P1-s3-d1-t0&quot;             &quot;P1-s3-d1-t14&quot;           
+##  [31] &quot;P1-s3-d1-t2&quot;             &quot;P1-s3-d2-t2&quot;            
+##  [33] &quot;P1-s3-d1-t21&quot;            &quot;P1-s3-d1-t42&quot;           
+##  [35] &quot;P1-s3-d2-b&quot;              &quot;P1-s3-d2-t0&quot;            
+##  [37] &quot;P1-s3-d2-t14&quot;            &quot;P1-s3-d2-t21&quot;           
+##  [39] &quot;P1-s3-d2-t42&quot;            &quot;P1-s4-d1-b&quot;             
+##  [41] &quot;P1-s4-d1-t0&quot;             &quot;P1-s4-d1-t14&quot;           
+##  [43] &quot;P1-s4-d1-t2&quot;             &quot;P1-s4-d2-t2&quot;            
+##  [45] &quot;P1-s4-d1-t21&quot;            &quot;P1-s4-d1-t42&quot;           
+##  [47] &quot;P1-s4-d2-b&quot;              &quot;P1-s4-d2-t0&quot;            
+##  [49] &quot;P1-s4-d2-t14&quot;            &quot;P1-s4-d2-t21&quot;           
+##  [51] &quot;P1-s4-d2-t42&quot;            &quot;P1-s5-d1-b&quot;             
+##  [53] &quot;P1-s5-d1-t0&quot;             &quot;P1-s5-d1-t14&quot;           
+##  [55] &quot;P1-s5-d1-t2&quot;             &quot;P1-s5-d1-t21&quot;           
+##  [57] &quot;P1-s5-d1-t42&quot;            &quot;P1-s5-d2-b&quot;             
+##  [59] &quot;P1-s5-d2-t0&quot;             &quot;P1-s5-d2-t14&quot;           
+##  [61] &quot;P1-s5-d2-t2&quot;             &quot;P1-s5-d2-t21&quot;           
+##  [63] &quot;P1-s5-d2-t42&quot;            &quot;P1-s6-d1-b&quot;             
+##  [65] &quot;P1-s6-d1-t0&quot;             &quot;P1-s6-d1-t14&quot;           
+##  [67] &quot;P1-s6-d1-t2&quot;             &quot;P1-s6-d1-t21&quot;           
+##  [69] &quot;P1-s6-d1-t42&quot;            &quot;P1-s6-d2-b&quot;             
+##  [71] &quot;P1-s6-d2-t0&quot;             &quot;P1-s6-d2-t14&quot;           
+##  [73] &quot;P1-s6-d2-t2&quot;             &quot;P1-s6-d2-t21&quot;           
+##  [75] &quot;P1-s6-d2-t42&quot;            &quot;P1-s7-d1-b&quot;             
+##  [77] &quot;P1-s7-d1-t0&quot;             &quot;P1-s7-d1-t14&quot;           
+##  [79] &quot;P1-s7-d1-t2&quot;             &quot;P1-s7-d1-t42&quot;           
+##  [81] &quot;P1-s7-d2-b&quot;              &quot;P1-s7-d2-t0&quot;            
+##  [83] &quot;P1-s7-d2-t14&quot;            &quot;P1-s7-d2-t2&quot;            
+##  [85] &quot;P1-s7-d2-t21&quot;            &quot;P1-s7-d2-t42&quot;           
+##  [87] &quot;P1-s8-d1-b&quot;              &quot;P1-s8-d1-t0&quot;            
+##  [89] &quot;P1-s8-d1-t14&quot;            &quot;P1-s8-d1-t2&quot;            
+##  [91] &quot;P1-s8-d1-t21&quot;            &quot;P1-s8-d1-t42&quot;           
+##  [93] &quot;P1-s8-d2-b&quot;              &quot;P1-s8-d2-t0&quot;            
+##  [95] &quot;P1-s8-d2-t14&quot;            &quot;P1-s8-d2-t2&quot;            
+##  [97] &quot;P1-s8-d2-t21&quot;            &quot;P1-s8-d2-t42&quot;           
+##  [99] &quot;P1-s9-d1-b&quot;              &quot;P1-s9-d1-t0&quot;            
+## [101] &quot;P1-s9-d1-t14&quot;            &quot;P1-s9-d1-t2&quot;            
+## [103] &quot;P1-s9-d1-t21&quot;            &quot;P1-s9-d1-t42&quot;           
+## [105] &quot;P1-s9-d2-b&quot;              &quot;P1-s9-d2-t0&quot;            
+## [107] &quot;P1-s9-d2-t14&quot;            &quot;P1-s9-d2-t2&quot;            
+## [109] &quot;P1-s9-d2-t21&quot;            &quot;P1-s9-d2-t42&quot;           
+## [111] &quot;P2-1&quot;                    &quot;P2-2&quot;                   
+## [113] &quot;P2-3&quot;                    &quot;P2-4&quot;                   
+## [115] &quot;P2-5&quot;                    &quot;P2-6&quot;                   
+## [117] &quot;P2-s1-d1-b&quot;              &quot;P2-s1-d1-t0&quot;            
+## [119] &quot;P2-s1-d1-t14&quot;            &quot;P2-s1-d1-t2&quot;            
+## [121] &quot;P2-s1-d1-t21&quot;            &quot;P2-s1-d1-t42&quot;           
+## [123] &quot;P2-s1-d2-b&quot;              &quot;P2-s1-d2-t0&quot;            
+## [125] &quot;P2-s1-d2-t14&quot;            &quot;P2-s1-d2-t2&quot;            
+## [127] &quot;P2-s1-d2-t21&quot;            &quot;P2-s1-d2-t42&quot;           
+## [129] &quot;P2-s2-d1-b&quot;              &quot;P2-s2-d1-t0&quot;            
+## [131] &quot;P2-s2-d1-t14&quot;            &quot;P2-s2-d1-t2&quot;            
+## [133] &quot;P2-s2-d1-t21&quot;            &quot;P2-s2-d1-t42&quot;           
+## [135] &quot;P2-s2-d2-b&quot;              &quot;P2-s2-d2-t0&quot;            
+## [137] &quot;P2-s2-d2-t14&quot;            &quot;P2-s2-d2-t2&quot;            
+## [139] &quot;P2-s2-d2-t21&quot;            &quot;P2-s2-d2-t42&quot;           
+## [141] &quot;P2-s3-d1-b&quot;              &quot;P2-s3-d1-t0&quot;            
+## [143] &quot;P2-s3-d1-t14&quot;            &quot;P2-s3-d1-t2&quot;            
+## [145] &quot;P2-s3-d1-t21&quot;            &quot;P2-s3-d2-b&quot;             
+## [147] &quot;P2-s3-d2-t0&quot;             &quot;P2-s3-d2-t14&quot;           
+## [149] &quot;P2-s3-d2-t2&quot;             &quot;P2-s3-d2-t21&quot;           
+## [151] &quot;P2-s3-d2-t42&quot;            &quot;P2-s4-d1-b&quot;             
+## [153] &quot;P2-s4-d1-t0&quot;             &quot;P2-s4-d1-t14&quot;           
+## [155] &quot;P2-s4-d1-t2&quot;             &quot;P2-s4-d1-t21&quot;           
+## [157] &quot;P2-s4-d1-t42&quot;            &quot;P2-s4-d2-b&quot;             
+## [159] &quot;P2-s4-d2-t0&quot;             &quot;P2-s4-d2-t14&quot;           
+## [161] &quot;P2-s4-d2-t2&quot;             &quot;P2-s4-d2-t21&quot;           
+## [163] &quot;P2-s4-d2-t42&quot;            &quot;P2-s5-d1-b&quot;             
+## [165] &quot;P2-s5-d1-t0&quot;             &quot;P2-s5-d1-t14&quot;           
+## [167] &quot;P2-s5-d1-t2&quot;             &quot;P2-s5-d1-t21&quot;           
+## [169] &quot;P2-s5-d1-t42&quot;            &quot;P2-s5-d2-b&quot;             
+## [171] &quot;P2-s5-d2-t0&quot;             &quot;P2-s5-d2-t14&quot;           
+## [173] &quot;P2-s5-d2-t2&quot;             &quot;P2-s5-d2-t21&quot;           
+## [175] &quot;P2-s5-d2-t42&quot;            &quot;P2-s6-d1-b&quot;             
+## [177] &quot;P2-s6-d1-t0&quot;             &quot;P2-s6-d1-t14&quot;           
+## [179] &quot;P2-s6-d1-t2&quot;             &quot;P2-s6-d1-t21&quot;           
+## [181] &quot;P2-s6-d1-t42&quot;            &quot;P2-s6-d2-b&quot;             
+## [183] &quot;P2-s6-d2-t0&quot;             &quot;P2-s6-d2-t14&quot;           
+## [185] &quot;P2-s6-d2-t2&quot;             &quot;P2-s6-d2-t21&quot;           
+## [187] &quot;P2-s6-d2-t42&quot;            &quot;P2-s7-d1-b&quot;             
+## [189] &quot;P2-s7-d1-t0&quot;             &quot;P2-s7-d1-t14&quot;           
+## [191] &quot;P2-s7-d1-t2&quot;             &quot;P2-s7-d1-t21&quot;           
+## [193] &quot;P2-s7-d1-t42&quot;            &quot;P2-s7-d2-b&quot;             
+## [195] &quot;P2-s7-d2-t0&quot;             &quot;P2-s7-d2-t14&quot;           
+## [197] &quot;P2-s7-d2-t2&quot;             &quot;P2-s7-d2-t21&quot;           
+## [199] &quot;P2-s7-d2-t42&quot;            &quot;P2-s8-d1-b&quot;             
+## [201] &quot;P2-s8-d1-t0&quot;             &quot;P2-s8-d1-t14&quot;           
+## [203] &quot;P2-s8-d1-t2&quot;             &quot;P2-s8-d1-t21&quot;           
+## [205] &quot;P2-s8-d1-t42&quot;            &quot;P2-s8-d2-b&quot;             
+## [207] &quot;P2-s8-d2-t0&quot;             &quot;P2-s8-d2-t14&quot;           
+## [209] &quot;P2-s8-d2-t2&quot;             &quot;P2-s8-d2-t21&quot;           
+## [211] &quot;P2-s8-d2-t42&quot;            &quot;P2-s9-d1-b&quot;             
+## [213] &quot;P2-s9-d1-t0&quot;             &quot;P2-s9-d1-t14&quot;           
+## [215] &quot;P2-s9-d1-t2&quot;             &quot;P2-s9-d1-t21&quot;           
+## [217] &quot;P2-s9-d2-b&quot;              &quot;P2-s9-d2-t0&quot;            
+## [219] &quot;P2-s9-d2-t14&quot;            &quot;P2-s9-d2-t2&quot;            
+## [221] &quot;P2-s9-d2-t21&quot;            &quot;P2-s9-d2-t42&quot;           
+## [223] &quot;P3-1&quot;                    &quot;P3-2&quot;                   
+## [225] &quot;P3-3&quot;                    &quot;P3-4&quot;                   
+## [227] &quot;P3-5&quot;                    &quot;P3-6&quot;                   
+## [229] &quot;P3-s1-d1-b&quot;              &quot;P3-s1-d1-t0&quot;            
+## [231] &quot;P3-s1-d1-t14&quot;            &quot;P3-s1-d1-t21&quot;           
+## [233] &quot;P3-s1-d1-t42&quot;            &quot;P3-s1-d2-b&quot;             
+## [235] &quot;P3-s1-d2-t0&quot;             &quot;P3-s1-d2-t14&quot;           
+## [237] &quot;P3-s1-d2-t2&quot;             &quot;P3-s1-d2-t21&quot;           
+## [239] &quot;P3-s1-d2-t42&quot;            &quot;P3-s2-d1-b&quot;             
+## [241] &quot;P3-s2-d1-t0&quot;             &quot;P3-s2-d1-t14&quot;           
+## [243] &quot;P3-s2-d1-t2&quot;             &quot;P3-s2-d1-t21&quot;           
+## [245] &quot;P3-s2-d1-t42&quot;            &quot;P3-s2-d2-b&quot;             
+## [247] &quot;P3-s2-d2-t0&quot;             &quot;P3-s2-d2-t14&quot;           
+## [249] &quot;P3-s2-d2-t2&quot;             &quot;P3-s2-d2-t21&quot;           
+## [251] &quot;P3-s2-d2-t42&quot;            &quot;P3-s3-d1-b&quot;             
+## [253] &quot;P3-s3-d1-t0&quot;             &quot;P3-s3-d1-t14&quot;           
+## [255] &quot;P3-s3-d1-t2&quot;             &quot;P3-s3-d1-t21&quot;           
+## [257] &quot;P3-s3-d1-t42&quot;            &quot;P3-s3-d2-b&quot;             
+## [259] &quot;P3-s3-d2-t0&quot;             &quot;P3-s3-d2-t14&quot;           
+## [261] &quot;P3-s3-d2-t2&quot;             &quot;P3-s3-d2-t21&quot;           
+## [263] &quot;P3-s3-d2-t42&quot;            &quot;P3-s4-d1-b&quot;             
+## [265] &quot;P3-s4-d1-t0&quot;             &quot;P3-s4-d1-t14&quot;           
+## [267] &quot;P3-s4-d1-t2&quot;             &quot;P3-s4-d1-t21&quot;           
+## [269] &quot;P3-s4-d1-t42&quot;            &quot;P3-s4-d2-b&quot;             
+## [271] &quot;P3-s4-d2-t0&quot;             &quot;P3-s4-d2-t14&quot;           
+## [273] &quot;P3-s4-d2-t2&quot;             &quot;P3-s4-d2-t21&quot;           
+## [275] &quot;P3-s4-d2-t42&quot;            &quot;P3-s5-d1-b&quot;             
+## [277] &quot;P3-s5-d1-t0&quot;             &quot;P3-s5-d1-t14&quot;           
+## [279] &quot;P3-s5-d1-t2&quot;             &quot;P3-s5-d1-t21&quot;           
+## [281] &quot;P3-s5-d1-t42&quot;            &quot;P3-s5-d2-b&quot;             
+## [283] &quot;P3-s5-d2-t0&quot;             &quot;P3-s5-d2-t2&quot;            
+## [285] &quot;P3-s5-d2-t21&quot;            &quot;P3-s5-d2-t42&quot;           
+## [287] &quot;P3-s6-d1-b&quot;              &quot;P3-s6-d1-t0&quot;            
+## [289] &quot;P3-s6-d1-t14&quot;            &quot;P3-s6-d1-t2&quot;            
+## [291] &quot;P3-s6-d1-t21&quot;            &quot;P3-s6-d1-t42&quot;           
+## [293] &quot;P3-s6-d2-b&quot;              &quot;P3-s6-d2-t0&quot;            
+## [295] &quot;P3-s6-d2-t14&quot;            &quot;P3-s6-d2-t2&quot;            
+## [297] &quot;P3-s6-d2-t21&quot;            &quot;P3-s6-d2-t42&quot;           
+## [299] &quot;P3-s7-d1-b&quot;              &quot;P3-s7-d1-t0&quot;            
+## [301] &quot;P3-s7-d1-t14&quot;            &quot;P3-s7-d1-t2&quot;            
+## [303] &quot;P3-s7-d1-t21&quot;            &quot;P3-s7-d1-t42&quot;           
+## [305] &quot;P3-s7-d2-b&quot;              &quot;P3-s7-d2-t0&quot;            
+## [307] &quot;P3-s7-d2-t14&quot;            &quot;P3-s7-d2-t2&quot;            
+## [309] &quot;P3-s7-d2-t21&quot;            &quot;P3-s7-d2-t42&quot;           
+## [311] &quot;P3-s8-d1-b&quot;              &quot;P3-s8-d1-t0&quot;            
+## [313] &quot;P3-s8-d1-t14&quot;            &quot;P3-s8-d1-t2&quot;            
+## [315] &quot;P3-s8-d1-t21&quot;            &quot;P3-s8-d2-b&quot;             
+## [317] &quot;P3-s8-d2-t0&quot;             &quot;P3-s8-d2-t14&quot;           
+## [319] &quot;P3-s8-d2-t2&quot;             &quot;P3-s8-d2-t21&quot;           
+## [321] &quot;P3-s8-d2-t42&quot;            &quot;P3-s9-d1-b&quot;             
+## [323] &quot;P3-s9-d1-t0&quot;             &quot;P3-s9-d1-t14&quot;           
+## [325] &quot;P3-s9-d1-t2&quot;             &quot;P3-s9-d1-t21&quot;           
+## [327] &quot;P3-s9-d1-t42&quot;            &quot;P3-s9-d2-b&quot;             
+## [329] &quot;P3-s9-d2-t0&quot;             &quot;P3-s9-d2-t14&quot;           
+## [331] &quot;P3-s9-d2-t2&quot;             &quot;P3-s9-d2-t21&quot;           
+## [333] &quot;P3-s9-d2-t42&quot;            &quot;P4-1&quot;                   
+## [335] &quot;P4-2&quot;                    &quot;P4-3&quot;                   
+## [337] &quot;P4-4&quot;                    &quot;P4-5&quot;                   
+## [339] &quot;P4-6&quot;                    &quot;P4-s1-d1-b&quot;             
+## [341] &quot;P4-s1-d1-t0&quot;             &quot;P4-s1-d1-t2&quot;            
+## [343] &quot;P4-s1-d1-t21&quot;            &quot;P4-s1-d1-t42&quot;           
+## [345] &quot;P4-s1-d2-b&quot;              &quot;P4-s1-d2-t0&quot;            
+## [347] &quot;P4-s1-d2-t14&quot;            &quot;P4-s1-d2-t2&quot;            
+## [349] &quot;P4-s1-d2-t21&quot;            &quot;P4-s1-d2-t42&quot;           
+## [351] &quot;P4-s2-d1-b&quot;              &quot;P4-s2-d1-t0&quot;            
+## [353] &quot;P4-s2-d1-t14&quot;            &quot;P4-s2-d1-t2&quot;            
+## [355] &quot;P4-s2-d1-t21&quot;            &quot;P4-s2-d1-t42&quot;           
+## [357] &quot;P4-s2-d2-b&quot;              &quot;P4-s2-d2-t0&quot;            
+## [359] &quot;P4-s2-d2-t14&quot;            &quot;P4-s2-d2-t2&quot;            
+## [361] &quot;P4-s2-d2-t21&quot;            &quot;P4-s2-d2-t42&quot;           
+## [363] &quot;P4-s3-d1-b&quot;              &quot;P4-s3-d1-t0&quot;            
+## [365] &quot;P4-s3-d1-t14&quot;            &quot;P4-s3-d1-t2&quot;            
+## [367] &quot;P4-s3-d1-t21&quot;            &quot;P4-s3-d1-t42&quot;           
+## [369] &quot;P4-s3-d2-b&quot;              &quot;P4-s3-d2-t0&quot;            
+## [371] &quot;P4-s3-d2-t14&quot;            &quot;P4-s3-d2-t2&quot;            
+## [373] &quot;P4-s3-d2-t21&quot;            &quot;P4-s3-d2-t42&quot;           
+## [375] &quot;P4-s4-d1-b&quot;              &quot;P4-s4-d1-t0&quot;            
+## [377] &quot;P4-s4-d1-t2&quot;             &quot;P4-s4-d1-t21&quot;           
+## [379] &quot;P4-s4-d1-t42&quot;            &quot;P4-s4-d2-b&quot;             
+## [381] &quot;P4-s4-d2-t0&quot;             &quot;P4-s4-d2-t14&quot;           
+## [383] &quot;P4-s4-d2-t2&quot;             &quot;P4-s4-d2-t21&quot;           
+## [385] &quot;P4-s4-d2-t42&quot;            &quot;P4-s5-d1-b&quot;             
+## [387] &quot;P4-s5-d1-t0&quot;             &quot;P4-s5-d1-t14&quot;           
+## [389] &quot;P4-s5-d1-t2&quot;             &quot;P4-s5-d1-t21&quot;           
+## [391] &quot;P4-s5-d1-t42&quot;            &quot;P4-s5-d2-b&quot;             
+## [393] &quot;P4-s5-d2-t0&quot;             &quot;P4-s5-d2-t14&quot;           
+## [395] &quot;P4-s5-d2-t2&quot;             &quot;P4-s5-d2-t21&quot;           
+## [397] &quot;P4-s5-d2-t42&quot;            &quot;P4-s6-d1-b&quot;             
+## [399] &quot;P4-s6-d1-t0&quot;             &quot;P4-s6-d1-t14&quot;           
+## [401] &quot;P4-S6-d1-t2&quot;             &quot;P4-s6-d1-t21&quot;           
+## [403] &quot;P4-s6-d1-t42&quot;            &quot;P4-s6-d2-t0&quot;            
+## [405] &quot;P4-s6-d2-t14&quot;            &quot;P4-s6-d2-t2&quot;            
+## [407] &quot;P4-s6-d2-t21&quot;            &quot;P4-s6-d2-t42&quot;           
+## [409] &quot;P4-s7-d1-b&quot;              &quot;P4-s7-d1-t0&quot;            
+## [411] &quot;P4-s7-d1-t14&quot;            &quot;P4-s7-d1-t2&quot;            
+## [413] &quot;P4-s7-d1-t21&quot;            &quot;P4-s7-d1-t42&quot;           
+## [415] &quot;P4-s7-d2-b&quot;              &quot;P4-s7-d2-t0&quot;            
+## [417] &quot;P4-s7-d2-t14&quot;            &quot;P4-s7-d2-t2&quot;            
+## [419] &quot;P4-s7-d2-t21&quot;            &quot;P4-s7-d2-t42&quot;           
+## [421] &quot;P4-s8-d1-b&quot;              &quot;P4-s8-d1-t0&quot;            
+## [423] &quot;P4-s8-d1-t14&quot;            &quot;P4-s8-d1-t2&quot;            
+## [425] &quot;P4-s8-d1-t21&quot;            &quot;P4-s8-d1-t42&quot;           
+## [427] &quot;P4-s8-d2-b&quot;              &quot;P4-s8-d2-t0&quot;            
+## [429] &quot;P4-s8-d2-t14&quot;            &quot;P4-s8-d2-t2&quot;            
+## [431] &quot;P4-s8-d2-t21&quot;            &quot;P4-s8-d2-t42&quot;           
+## [433] &quot;P4-s9-d1-b&quot;              &quot;P4-s9-d1-t0&quot;            
+## [435] &quot;P4-s9-d1-t14&quot;            &quot;P4-s9-d1-t2&quot;            
+## [437] &quot;P4-s9-d1-t21&quot;            &quot;P4-s9-d1-t42&quot;           
+## [439] &quot;P4-s9-d2-b&quot;              &quot;P4-s9-d2-t0&quot;            
+## [441] &quot;P4-s9-d2-t14&quot;            &quot;P4-s9-d2-t2&quot;            
+## [443] &quot;P4-s9-d2-t21&quot;            &quot;P4-s9-d2-t42&quot;           
+## [445] &quot;P5-1&quot;                    &quot;P5-2&quot;                   
+## [447] &quot;P5-3&quot;                    &quot;P5-4&quot;                   
+## [449] &quot;P5-5&quot;                    &quot;P5-6&quot;                   
+## [451] &quot;P5-s1-d1-b&quot;              &quot;P5-s1-d1-t0&quot;            
+## [453] &quot;P5-s1-d1-t14&quot;            &quot;P5-s1-d1-t2&quot;            
+## [455] &quot;P5-s1-d1-t21&quot;            &quot;P5-s1-d2-b&quot;             
+## [457] &quot;P5-s1-d2-t0&quot;             &quot;P5-s1-d2-t14&quot;           
+## [459] &quot;P5-s1-d2-t2&quot;             &quot;P5-s1-d2-t21&quot;           
+## [461] &quot;P5-s1-d2-t42&quot;            &quot;P5-s2-d1-b&quot;             
+## [463] &quot;P5-s2-d1-t0&quot;             &quot;P5-s2-d1-t14&quot;           
+## [465] &quot;P5-s2-d1-t2&quot;             &quot;P5-s2-d1-t21&quot;           
+## [467] &quot;P5-s2-d1-t42&quot;            &quot;P5-s2-d2-b&quot;             
+## [469] &quot;P5-s2-d2-t0&quot;             &quot;P5-s2-d2-t14&quot;           
+## [471] &quot;P5-s2-d2-t2&quot;             &quot;P5-s2-d2-t21&quot;           
+## [473] &quot;P5-s2-d2-t42&quot;            &quot;P5-s3-d1-b&quot;             
+## [475] &quot;P5-s3-d1-t0&quot;             &quot;P5-s3-d1-t14&quot;           
+## [477] &quot;P5-s3-d1-t2&quot;             &quot;P5-s3-d1-t21&quot;           
+## [479] &quot;P5-s3-d1-t42&quot;            &quot;P5-s3-d2-b&quot;             
+## [481] &quot;P5-s3-d2-t0&quot;             &quot;P5-s3-d2-t14&quot;           
+## [483] &quot;P5-s3-d2-t2&quot;             &quot;P5-s3-d2-t21&quot;           
+## [485] &quot;P5-s3-d2-t42&quot;            &quot;P5-s4-d1-b&quot;             
+## [487] &quot;P5-s4-d1-t0&quot;             &quot;P5-s4-d1-t14&quot;           
+## [489] &quot;P5-s4-d1-t2&quot;             &quot;P5-s4-d1-t21&quot;           
+## [491] &quot;P5-s4-d1-t42&quot;            &quot;P5-s4-d2-b&quot;             
+## [493] &quot;P5-s4-d2-t0&quot;             &quot;P5-s4-d2-t14&quot;           
+## [495] &quot;P5-s4-d2-t2&quot;             &quot;P5-s4-d2-t21&quot;           
+## [497] &quot;P5-s4-d2-t42&quot;            &quot;P5-s5-d1-b&quot;             
+## [499] &quot;P5-s5-d1-t0&quot;             &quot;P5-s5-d1-t14&quot;           
+## [501] &quot;P5-s5-d1-t2&quot;             &quot;P5-s5-d1-t21&quot;           
+## [503] &quot;P5-s5-d1-t42&quot;            &quot;P5-s5-d2-t0&quot;            
+## [505] &quot;P5-s5-d2-t14&quot;            &quot;P5-s5-d2-t2&quot;            
+## [507] &quot;P5-s5-d2-t21&quot;            &quot;P5-s5-d2-t42&quot;           
+## [509] &quot;P5-s6-d1-b&quot;              &quot;P5-s6-d1-t0&quot;            
+## [511] &quot;P5-s6-d1-t14&quot;            &quot;P5-s6-d1-t2&quot;            
+## [513] &quot;P5-s6-d1-t21&quot;            &quot;P5-s6-d1-t42&quot;           
+## [515] &quot;P5-s6-d2-b&quot;              &quot;P5-s6-d2-t0&quot;            
+## [517] &quot;P5-s6-d2-t14&quot;            &quot;P5-s6-d2-t2&quot;            
+## [519] &quot;P5-s6-d2-t21&quot;            &quot;P5-s6-d2-t42&quot;           
+## [521] &quot;P5-s7-d1-b&quot;              &quot;P5-s7-d1-t0&quot;            
+## [523] &quot;P5-s7-d1-t14&quot;            &quot;P5-s7-d1-t2&quot;            
+## [525] &quot;P5-s7-d1-t21&quot;            &quot;P5-s7-d2-b&quot;             
+## [527] &quot;P5-s7-d2-t0&quot;             &quot;P5-s7-d2-t14&quot;           
+## [529] &quot;P5-s7-d2-t21&quot;            &quot;P5-s7-d2-t42&quot;           
+## [531] &quot;P5-s8-d1-b&quot;              &quot;P5-s8-d1-t0&quot;            
+## [533] &quot;P5-s8-d1-t14&quot;            &quot;P5-s8-d1-t2&quot;            
+## [535] &quot;P5-s8-d1-t21&quot;            &quot;P5-s8-d1-t42&quot;           
+## [537] &quot;P5-s8-d2-b&quot;              &quot;P5-s8-d2-t0&quot;            
+## [539] &quot;P5-s8-d2-t14&quot;            &quot;P5-s8-d2-t2&quot;            
+## [541] &quot;P5-s8-d2-t21&quot;            &quot;P5-s8-d2-t42&quot;           
+## [543] &quot;P5-s9-d1-b&quot;              &quot;P5-s9-d1-t0&quot;            
+## [545] &quot;P5-s9-d1-t14&quot;            &quot;P5-s9-d1-t2&quot;            
+## [547] &quot;P5-s9-d1-t21&quot;            &quot;P5-s9-d1-t42&quot;           
+## [549] &quot;P5-s9-d2-b&quot;              &quot;P5-s9-d2-t0&quot;            
+## [551] &quot;P5-s9-d2-t14&quot;            &quot;P5-s9-d2-t2&quot;            
+## [553] &quot;P5-s9-d2-t21&quot;            &quot;P5-s9-d2-t42&quot;           
+## [555] &quot;P6-1&quot;                    &quot;P6-2&quot;                   
+## [557] &quot;P6-3&quot;                    &quot;P6-4&quot;                   
+## [559] &quot;P6-5&quot;                    &quot;P6-6&quot;                   
+## [561] &quot;P6-s1-d1-b&quot;              &quot;P6-s1-d1-t0&quot;            
+## [563] &quot;P6-s1-d1-t14&quot;            &quot;P6-s1-d1-t2&quot;            
+## [565] &quot;P6-s1-d1-t21&quot;            &quot;P6-s1-d1-t42&quot;           
+## [567] &quot;P6-s1-d2-b&quot;              &quot;P6-s1-d2-t0&quot;            
+## [569] &quot;P6-s1-d2-t14&quot;            &quot;P6-s1-d2-t2&quot;            
+## [571] &quot;P6-s1-d2-t21&quot;            &quot;P6-s1-d2-t42&quot;           
+## [573] &quot;P6-s2-d1-b&quot;              &quot;P6-s2-d1-t0&quot;            
+## [575] &quot;P6-s2-d1-t14&quot;            &quot;P6-s2-d1-t2&quot;            
+## [577] &quot;P6-s2-d1-t21&quot;            &quot;P6-s2-d1-t42&quot;           
+## [579] &quot;P6-s2-d2-b&quot;              &quot;P6-s2-d2-t0&quot;            
+## [581] &quot;P6-s2-d2-t14&quot;            &quot;P6-s2-d2-t2&quot;            
+## [583] &quot;P6-s2-d2-t21&quot;            &quot;P6-s2-d2-t42&quot;           
+## [585] &quot;P6-s3-d1-b&quot;              &quot;P6-s3-d1-t0&quot;            
+## [587] &quot;P6-s3-d1-t14&quot;            &quot;P6-s3-d1-t2&quot;            
+## [589] &quot;P6-s3-d1-t21&quot;            &quot;P6-s3-d2-b&quot;             
+## [591] &quot;P6-s3-d2-t0&quot;             &quot;P6-s3-d2-t14&quot;           
+## [593] &quot;P6-s3-d2-t2&quot;             &quot;P6-s3-d2-t21&quot;           
+## [595] &quot;P6-s3-d2-t42&quot;            &quot;P6-s4-d1-b&quot;             
+## [597] &quot;P6-s4-d1-t0&quot;             &quot;P6-s4-d1-t14&quot;           
+## [599] &quot;P6-s4-d1-t2&quot;             &quot;P6-s4-d1-t42&quot;           
+## [601] &quot;P6-s4-d2-t0&quot;             &quot;P6-s4-d2-t14&quot;           
+## [603] &quot;P6-s4-d2-t2&quot;             &quot;P6-s4-d2-t21&quot;           
+## [605] &quot;P6-s4-d2-t42&quot;            &quot;P6-s5-d1-b&quot;             
+## [607] &quot;P6-s5-d1-t0&quot;             &quot;P6-s5-d1-t14&quot;           
+## [609] &quot;P6-s5-d1-t2&quot;             &quot;P6-s5-d1-t21&quot;           
+## [611] &quot;P6-s5-d1-t42&quot;            &quot;P6-s5-d2-b&quot;             
+## [613] &quot;P6-s5-d2-t0&quot;             &quot;P6-s5-d2-t14&quot;           
+## [615] &quot;P6-s5-d2-t2&quot;             &quot;P6-s5-d2-t21&quot;           
+## [617] &quot;P6-s5-d2-t42&quot;            &quot;P6-s6-d1-b&quot;             
+## [619] &quot;P6-s6-d1-t0&quot;             &quot;P6-s6-d1-t14&quot;           
+## [621] &quot;P6-s6-d1-t2&quot;             &quot;P6-s6-d1-t21&quot;           
+## [623] &quot;P6-s6-d1-t42&quot;            &quot;P6-s6-d2-b&quot;             
+## [625] &quot;P6-s6-d2-t0&quot;             &quot;P6-s6-d2-t14&quot;           
+## [627] &quot;P6-s6-d2-t2&quot;             &quot;P6-s6-d2-t21&quot;           
+## [629] &quot;P6-s6-d2-t42&quot;            &quot;P6-s7-d1-b&quot;             
+## [631] &quot;P6-s7-d1-t0&quot;             &quot;P6-s7-d1-t14&quot;           
+## [633] &quot;P6-s7-d1-t2&quot;             &quot;P6-s7-d1-t21&quot;           
+## [635] &quot;P6-s7-d1-t42&quot;            &quot;P6-s7-d2-b&quot;             
+## [637] &quot;P6-s7-d2-t0&quot;             &quot;P6-s7-d2-t14&quot;           
+## [639] &quot;P6-s7-d2-t2&quot;             &quot;P6-s7-d2-t21&quot;           
+## [641] &quot;P6-s7-d2-t42&quot;            &quot;P6-s8-d1-b&quot;             
+## [643] &quot;P6-s8-d1-t0&quot;             &quot;P6-s8-d1-t14&quot;           
+## [645] &quot;P6-s8-d1-t2&quot;             &quot;P6-s8-d1-t21&quot;           
+## [647] &quot;P6-s8-d1-t42&quot;            &quot;P6-s8-d2-b&quot;             
+## [649] &quot;P6-s8-d2-t0&quot;             &quot;P6-s8-d2-t14&quot;           
+## [651] &quot;P6-s8-d2-t2&quot;             &quot;P6-s8-d2-t21&quot;           
+## [653] &quot;P6-s8-d2-t42&quot;            &quot;P6-s9-d1-b&quot;             
+## [655] &quot;P6-s9-d1-t0&quot;             &quot;P6-s9-d1-t14&quot;           
+## [657] &quot;P6-s9-d1-t2&quot;             &quot;P6-s9-d1-t21&quot;           
+## [659] &quot;P6-s9-d1-t42&quot;            &quot;P6-s9-d2-b&quot;             
+## [661] &quot;P6-s9-d2-t0&quot;             &quot;P6-s9-d2-t14&quot;           
+## [663] &quot;P6-s9-d2-t2&quot;             &quot;P6-s9-d2-t21&quot;           
+## [665] &quot;P6-s9-d2-t42&quot;            &quot;P7-1&quot;                   
+## [667] &quot;P7-2&quot;                    &quot;P7-3&quot;                   
+## [669] &quot;P7-4&quot;                    &quot;P7-5&quot;                   
+## [671] &quot;P7-6&quot;                    &quot;P7-s1-d1-b&quot;             
+## [673] &quot;P7-s1-d1-t0&quot;             &quot;P7-s1-d1-t14&quot;           
+## [675] &quot;P7-s1-d1-t2&quot;             &quot;P7-s1-d2-b&quot;             
+## [677] &quot;P7-s1-d2-t0&quot;             &quot;P7-s1-d2-t14&quot;           
+## [679] &quot;P7-s1-d2-t2&quot;             &quot;P7-s1-d2-t21&quot;           
+## [681] &quot;P7-s1-d2-t42&quot;            &quot;P7-s2-d1-b&quot;             
+## [683] &quot;P7-s2-d1-t0&quot;             &quot;P7-s2-d1-t14&quot;           
+## [685] &quot;P7-s2-d1-t2&quot;             &quot;P7-s2-d1-t21&quot;           
+## [687] &quot;P7-s2-d1-t42&quot;            &quot;P7-s2-d2-b&quot;             
+## [689] &quot;P7-s2-d2-t0&quot;             &quot;P7-s2-d2-t14&quot;           
+## [691] &quot;P7-s2-d2-t2&quot;             &quot;P7-s2-d2-t21&quot;           
+## [693] &quot;P7-s2-d2-t42&quot;            &quot;P7-s3-d1-b&quot;             
+## [695] &quot;P7-s3-d1-t0&quot;             &quot;P7-s3-d1-t14&quot;           
+## [697] &quot;P7-s3-d1-t2&quot;             &quot;P7-s3-d1-t21&quot;           
+## [699] &quot;P7-s3-d1-t42&quot;            &quot;P7-s3-d2-t0&quot;            
+## [701] &quot;P7-s3-d2-t14&quot;            &quot;P7-s3-d2-t2&quot;            
+## [703] &quot;P7-s3-d2-t21&quot;            &quot;P7-s3-d2-t42&quot;           
+## [705] &quot;P7-s4-d1-b&quot;              &quot;P7-s4-d1-t0&quot;            
+## [707] &quot;P7-s4-d1-t14&quot;            &quot;P7-s4-d1-t2&quot;            
+## [709] &quot;P7-s4-d1-t21&quot;            &quot;P7-s4-d1-t42&quot;           
+## [711] &quot;P7-s4-d2-b&quot;              &quot;P7-s4-d2-t0&quot;            
+## [713] &quot;P7-s4-d2-t14&quot;            &quot;P7-s4-d2-t2&quot;            
+## [715] &quot;P7-s4-d2-t21&quot;            &quot;P7-s4-d2-t42&quot;           
+## [717] &quot;P7-s5-d1-b&quot;              &quot;P7-s5-d1-t0&quot;            
+## [719] &quot;P7-s5-d1-t14&quot;            &quot;P7-s5-d1-t2&quot;            
+## [721] &quot;P7-s5-d1-t21&quot;            &quot;P7-s5-d1-t42&quot;           
+## [723] &quot;P7-s5-d2-b&quot;              &quot;P7-s5-d2-t0&quot;            
+## [725] &quot;P7-s5-d2-t14&quot;            &quot;P7-s5-d2-t2&quot;            
+## [727] &quot;P7-s5-d2-t21&quot;            &quot;P7-s5-d2-t42&quot;           
+## [729] &quot;P8-1&quot;                    &quot;P8-2&quot;                   
+## [731] &quot;P8-3&quot;                    &quot;P8-4&quot;                   
+## [733] &quot;P8-5&quot;                    &quot;P8-6&quot;                   
+## [735] &quot;P8-s1-d1-b&quot;              &quot;P8-s1-d1-t0&quot;            
+## [737] &quot;P8-s1-d1-t14&quot;            &quot;P8-s1-d1-t2&quot;            
+## [739] &quot;P8-s1-d1-t21&quot;            &quot;P8-s1-d1-t42&quot;           
+## [741] &quot;P8-s1-d2-b&quot;              &quot;P8-s1-d2-t0&quot;            
+## [743] &quot;P8-s1-d2-t14&quot;            &quot;P8-s1-d2-t2&quot;            
+## [745] &quot;P8-s1-d2-t21&quot;            &quot;P8-s1-d2-t42&quot;           
+## [747] &quot;P8-s2-d1-b&quot;              &quot;P8-s2-d1-t0&quot;            
+## [749] &quot;P8-s2-d1-t14&quot;            &quot;P8-s2-d1-t2&quot;            
+## [751] &quot;P8-s2-d1-t21&quot;            &quot;P8-s2-d1-t42&quot;           
+## [753] &quot;P8-s2-d2-b&quot;              &quot;P8-s2-d2-t0&quot;            
+## [755] &quot;P8-s2-d2-t14&quot;            &quot;P8-s2-d2-t2&quot;            
+## [757] &quot;P8-s2-d2-t42&quot;            &quot;P8-s3-d1-b&quot;             
+## [759] &quot;P8-s3-d1-t0&quot;             &quot;P8-s3-d1-t14&quot;           
+## [761] &quot;P8-s3-d1-t2&quot;             &quot;P8-s3-d1-t21&quot;           
+## [763] &quot;P8-s3-d1-t42&quot;            &quot;P8-s3-d2-b&quot;             
+## [765] &quot;P8-s3-d2-t0&quot;             &quot;P8-s3-d2-t14&quot;           
+## [767] &quot;P8-s3-d2-t2&quot;             &quot;P8-s3-d2-t21&quot;           
+## [769] &quot;P8-s3-d2-t42&quot;            &quot;P8-s4-d1-b&quot;             
+## [771] &quot;P8-s4-d1-t0&quot;             &quot;P8-s4-d1-t14&quot;           
+## [773] &quot;P8-s4-d1-t2&quot;             &quot;P8-s4-d1-t21&quot;           
+## [775] &quot;P8-s4-d1-t42&quot;            &quot;P8-s4-d2-b&quot;             
+## [777] &quot;P8-s4-d2-t0&quot;             &quot;P8-s4-d2-t2&quot;            
+## [779] &quot;P8-s4-d2-t21&quot;            &quot;P8-s4-d2-t42&quot;           
+## [781] &quot;P8-s5-d1-b&quot;              &quot;P8-s5-d1-t0&quot;            
+## [783] &quot;P8-s5-d1-t14&quot;            &quot;P8-s5-d1-t2&quot;            
+## [785] &quot;P8-s5-d1-t21&quot;            &quot;P8-s5-d1-t42&quot;           
+## [787] &quot;P8-s5-d2-b&quot;              &quot;P8-s5-d2-t0&quot;            
+## [789] &quot;P8-s5-d2-t14&quot;            &quot;P8-s5-d2-t2&quot;            
+## [791] &quot;P8-s5-d2-t21&quot;            &quot;P8-s5-d2-t42&quot;           
+## [793] &quot;P9-1&quot;                    &quot;P9-2&quot;                   
+## [795] &quot;P9-3&quot;                    &quot;P9-4&quot;                   
+## [797] &quot;P9-5&quot;                    &quot;P9-6&quot;                   
+## [799] &quot;P9-s1-d1-b&quot;              &quot;P9-s1-d1-t0&quot;            
+## [801] &quot;P9-s1-d1-t14&quot;            &quot;P9-s1-d1-t2&quot;            
+## [803] &quot;P9-s1-d1-t42&quot;            &quot;P9-s1-d2-b&quot;             
+## [805] &quot;P9-s1-d2-t0&quot;             &quot;P9-s1-d2-t14&quot;           
+## [807] &quot;P9-s1-d2-t2&quot;             &quot;P9-s1-d2-t21&quot;           
+## [809] &quot;P9-s1-d2-t42&quot;            &quot;P9-s2-d1-b&quot;             
+## [811] &quot;P9-s2-d1-t0&quot;             &quot;P9-s2-d1-t14&quot;           
+## [813] &quot;P9-s2-d1-t2&quot;             &quot;P9-s2-d1-t21&quot;           
+## [815] &quot;P9-s2-d1-t42&quot;            &quot;P9-s2-d2-b&quot;             
+## [817] &quot;P9-s2-d2-t0&quot;             &quot;P9-s2-d2-t14&quot;           
+## [819] &quot;P9-s2-d2-t2&quot;             &quot;P9-s2-d2-t21&quot;           
+## [821] &quot;P9-s2-d2-t42&quot;            &quot;P9-s3-d1-b&quot;             
+## [823] &quot;P9-s3-d1-t0&quot;             &quot;P9-s3-d1-t14&quot;           
+## [825] &quot;P9-s3-d1-t2&quot;             &quot;P9-s3-d1-t21&quot;           
+## [827] &quot;P9-s3-d1-t42&quot;            &quot;P9-s3-d2-b&quot;             
+## [829] &quot;P9-s3-d2-t14&quot;            &quot;P9-s3-d2-t2&quot;            
+## [831] &quot;P9-s3-d2-t21&quot;            &quot;P9-s3-d2-t42&quot;           
+## [833] &quot;P9-s4-d1-b&quot;              &quot;P9-s4-d1-t0&quot;            
+## [835] &quot;P9-s4-d1-t14&quot;            &quot;P9-s4-d1-t2&quot;            
+## [837] &quot;P9-s4-d1-t21&quot;            &quot;P9-s4-d1-t42&quot;           
+## [839] &quot;P9-s4-d2-b&quot;              &quot;P9-s4-d2-t0&quot;            
+## [841] &quot;P9-s4-d2-t14&quot;            &quot;P9-s4-d2-t2&quot;            
+## [843] &quot;P9-s4-d2-t21&quot;            &quot;P9-s4-d2-t42&quot;           
+## [845] &quot;P9-s5-d1-b&quot;              &quot;P9-s5-d1-t0&quot;            
+## [847] &quot;P9-s5-d1-t14&quot;            &quot;P9-s5-d1-t2&quot;            
+## [849] &quot;P9-s5-d1-t21&quot;            &quot;P9-s5-d1-t42&quot;           
+## [851] &quot;P9-s5-d2-b&quot;              &quot;P9-s5-d2-t0&quot;            
+## [853] &quot;P9-s5-d2-t14&quot;            &quot;P9-s5-d2-t2&quot;            
+## [855] &quot;P9-s5-d2-t21&quot;            &quot;P9-s5-d2-t42&quot;           
+## [857] &quot;PMB1A1&quot;                  &quot;PMB1D1&quot;                 
+## [859] &quot;PMB2B1&quot;                  &quot;PMB2E2&quot;                 
+## [861] &quot;PMB3C1&quot;                  &quot;PMB3F1&quot;</code></pre>
+<pre class="r"><code>rownames(all_data) &lt;- all_data$id
+
+sample_data(phy) &lt;- all_data</code></pre>
+<pre class="r"><code>colnames(phy@sam_data)</code></pre>
+<pre><code>##  [1] &quot;id&quot;               &quot;PI&quot;               &quot;matrix&quot;          
+##  [4] &quot;plot&quot;             &quot;treatment&quot;        &quot;day&quot;             
+##  [7] &quot;depth&quot;            &quot;in_plot_location&quot; &quot;block&quot;           
+## [10] &quot;runoff_sample&quot;    &quot;Vegetation&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$matrix)</code></pre>
+<pre><code>## [1] &quot;water&quot;  &quot;soil&quot;   &quot;manure&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$day)</code></pre>
+<pre><code>## [1] &quot;0&quot;   &quot;b&quot;   &quot;t0&quot;  &quot;t14&quot; &quot;t02&quot; &quot;t21&quot; &quot;t42&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$depth)</code></pre>
+<pre><code>## [1] NA   &quot;d1&quot; &quot;d2&quot;</code></pre>
+<pre class="r"><code>unique(phy@sam_data$treatment)</code></pre>
+<pre><code>## [1] &quot;manured_control&quot; &quot;no_manure_strip&quot; &quot;manured_strip&quot;   NA</code></pre>
+<pre class="r"><code>base_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;b&quot; &amp; depth == &quot;d1&quot;) 
+
+min(taxa_sums(base_all_measures))</code></pre>
+<pre><code>## [1] 0</code></pre>
+<pre class="r"><code>plot_richness(base_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-4-1.png" width="816" /></p>
+<pre class="r"><code>t0_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t0&quot; &amp; depth == &quot;d1&quot;) 
+
+plot_richness(t0_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-5-1.png" width="816" /></p>
+<pre class="r"><code>t2_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t02&quot; &amp; depth == &quot;d1&quot;) 
+
+plot_richness(t2_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-6-1.png" width="816" /></p>
+<pre class="r"><code>t14_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t14&quot; &amp; depth == &quot;d1&quot;) 
+
+plot_richness(t14_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-7-1.png" width="816" /></p>
+<pre class="r"><code>t42_all_measures &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; day == &quot;t42&quot; &amp; depth == &quot;d1&quot;) 
+
+plot_richness(t42_all_measures, x = &quot;Vegetation&quot;, color = &quot;treatment&quot;)</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-8-1.png" width="816" /></p>
+<pre class="r"><code>all.days.prairie.appended.d1 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d1&quot; &amp; treatment %in% c(&quot;no_manure_strip&quot;, &quot;manured_strip&quot;))
+all.days.prairie.appended.d2 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d2&quot; &amp; treatment %in% c(&quot;no_manure_strip&quot;, &quot;manured_strip&quot;))
+
+plot_richness(all.days.prairie.appended.d1, x = &quot;day&quot;, color = &quot;treatment&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;))</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-9-1.png" width="816" /></p>
+<pre class="r"><code>plot_richness(all.days.prairie.appended.d2, x = &quot;day&quot;, color = &quot;treatment&quot;, measures = c(&quot;Observed&quot;, &quot;Shannon&quot;))</code></pre>
+<p><img src="diversity_files/figure-html/unnamed-chunk-9-2.png" width="816" /></p>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

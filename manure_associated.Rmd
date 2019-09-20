@@ -56,45 +56,12 @@ manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
 persistors.phy <- subset_taxa(manure.phy, OTUID %in% manure_persitors) %>%
   filter_taxa(function(x) sum(x) >= 5, T) 
 persistors.phy
-min(sample_sums(persistors.phy))
-max(sample_sums(persistors.phy))
-
-plot_heatmap(persistors.phy)
-
-abundance_heatmap(persistors.phy, classification = NULL, treatment = "treatment", subset = "day", transformation = 'none', colors = 'default')
+min(taxa_sums(persistors.phy))
+max(taxa_sums(persistors.phy))
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
 ```{r}
-taxa_abundance_bars(manure_ASVs_physeq, classification = "Genus", treatment = c("treatment"), subset = c("manured_control", "no_manure_strip", "manured_strip"), transformation = "mean", wrap_by = "day")
-```
-## Working off my own scripts from the incubation manuscript   
-We would like to generate a plot showing only soil samples from `S1-S5` to determine if proximity to strips affects persistance. Control plots are the greatest distance from where manure was applied. 
-
-```{r}
-#Rename treatments to more informative titles
-data <- data.frame(sample_data(manure_ASVs_physeq)) %>%
-  mutate(TreatmentAndDay = paste(treatment, day))
-
-rownames(data) <- data$id
-sample_data(manure_ASVs_physeq) <- data
-sample_data(manure_ASVs_physeq)$day <- as.factor(sample_data(manure_ASVs_physeq)$day)
-sample_data(manure_ASVs_physeq)
-unique(manure_ASVs_physeq@sam_data$day)
-```
-
-```{r}
-# test conglomorate samples from phylosmith
-tt <- conglomerate_samples(manure_ASVs_physeq, c("TreatmentAndDay")) # slow and still gives NA, never completed testing this
-
-manure_ASVs_soil <- subset_samples(manure_ASVs_physeq, matrix %in% c("soil")) %>%
-  filter_taxa(function(x) sum(x) >= 1, T) %>%
-  melt_phyloseq() %>%
-  arrange(Phylum)
-
-test <- manure_ASVs_soil %>%
-  group_by(TreatmentAndDay) 
-
-test
+plot_bar(persistors.phy, x = "treatment", y = "Abundance")
 ```
 
