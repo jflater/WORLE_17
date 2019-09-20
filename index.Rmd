@@ -18,7 +18,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Data analysis from the 2017 WORLE rainfall simulation   
+Data analysis from the 2017 WORLE rainfall simulation   
 
 ![](./images/20171026_090427.jpg)
 
