@@ -16,6 +16,6 @@ navbar:
     
 output:
   html_document:
-    theme: tactile
+    theme: lumen
     lib_dir: site_libs
     self_contained: no
