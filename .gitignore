@@ -4,6 +4,7 @@
 .Ruserdata
 
 data/
+images/
 
 # History files
 .Rhistory

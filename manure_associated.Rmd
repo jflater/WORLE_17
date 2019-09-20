@@ -2,7 +2,16 @@
 title: "Analysis of WORLE 2017 soils and water 16s rRNA"
 author: "Jared"
 date: "6/20/2019"
-output: html_document
+output:
+  html_document:
+    df_print: paged
+    fig_width: 8.5
+    fig_height: 11
+    fig_caption: true
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}

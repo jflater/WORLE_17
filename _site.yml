@@ -9,11 +9,13 @@ navbar:
     href: manure_associated.html  
   - text: Diversity  
     href: diversity.html 
+  - text: Ordinations
+    href: ordinations.html
 
     
     
 output:
   html_document:
-    theme: lumen
+    theme: tactile
     lib_dir: site_libs
     self_contained: no
