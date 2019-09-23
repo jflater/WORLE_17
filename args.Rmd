@@ -1,5 +1,5 @@
 ---
-title: "ARGs in WORLE poultry manure, 2017 wafergen results using Bob's prmers"
+title: "ARGs in WORLE poultry manure, 2017 wafergen results using Bob's primers"
 author: "Jared"
 date: "9/23/2019"
 output:

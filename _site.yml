@@ -14,7 +14,6 @@ navbar:
   - text: ARGs
     href: args.html
     
-    
 output:
   html_document:
     theme: lumen
