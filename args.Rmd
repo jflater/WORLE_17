@@ -1,0 +1,108 @@
+---
+title: "ARGs in WORLE poultry manure, 2017 wafergen results using Bob's prmers"
+author: "Jared"
+date: "9/23/2019"
+output:
+  html_document:
+    df_print: paged
+    fig_width: 8.5
+    fig_height: 11
+    fig_caption: true
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=F, message=F}
+library(tidyverse)
+library(ggplot2)
+library(reshape2)
+library(ggpubr)
+library(data.table)
+```
+    
+This page details processing results from wafergen runs. In this case, the run was on the poultry manure used for the 
+WORLE 2017 rainfall simulation with probes from "Bob's Primers".  
+   
+#### Read in results from wafergen, this is a tab seperated text file  
+We can remove rows with Ct values that have NA as these were not amplified, test to see if any NAs in Ct column:
+```{r, message=FALSE}
+STRIPs <- read.delim("~/Documents/STRIPs/WORLE_17/data/wafergen_results/STRIPs.txt", row.names=NULL, comment.char="#")
+# For this data, any rows with Ct == NA are not valuable, they indicated that a target sequence was not amplified in a sample so we can leave them out of this data
+
+STRIPs <- STRIPs %>%
+  filter(Ct != "NA")
+anyNA(STRIPs$Ct)
+```
+```{r}
+# Add a column "ID" with information based on the "Sample" column, basically making a group where reps are within a sample to calculate mean
+STRIPs <- STRIPs %>%
+  mutate(ID = ifelse(grepl("B1_manure", Sample), "B1_manure",
+                     ifelse(grepl("B2_manure", Sample), "B2_manure",
+                            ifelse(grepl("P4", Sample), "Prairie",
+                                   ifelse(grepl("P3", Sample), "Border", "Crop")))))
+```
+
+### Filtering based on Ct    
+For this data, we will exclude Ct values of more than 28 based on experience.        
+First we select only rows with Ct less than 28 and then group samples by 
+```{r}
+hits <- STRIPs %>%
+  select(Sample, ID, Assay, Ct) %>%
+  filter(Ct <= 28) %>%
+  group_by(ID, Assay) %>%
+  summarize(mean_ct = mean(Ct, na.rm = F)) %>%
+  arrange(ID, Assay, mean_ct)
+```
+
+# Wafergen results in soil without manure
+```{r}
+hits_soil <- hits %>%
+  filter(ID %in% c("Prairie", "Border", "Crop"))
+p <- ggplot(data=hits_soil, aes(x=ID, y=mean_ct, fill=Assay)) +
+geom_bar(stat="identity", color="black", position=position_dodge())+
+  theme_minimal()
+p
+```
+  
+# Wafergen results in manure
+```{r}
+hits_manure <- hits %>%
+  filter(ID %in% c("B1_manure", "B2_manure"))
+p <- ggplot(data=hits_manure, aes(x=ID, y=mean_ct, fill=Assay)) +
+geom_bar(stat="identity", color="black", position=position_dodge())+
+  theme_minimal()
+p
+```    
+   
+## tet genes
+```{r}
+tet <- filter(hits, grepl("tet", Assay)) 
+tetp <- ggplot(data=tet, aes(x=ID, y=mean_ct, fill=Assay)) +
+geom_bar(stat="identity", color="black", position=position_dodge())+
+  theme_minimal()
+tetp
+```
+    
+## erm genes
+```{r}
+erm <- filter(hits, grepl("erm", Assay)) 
+ermp <- ggplot(data=erm, aes(x=ID, y=mean_ct, fill=Assay)) +
+geom_bar(stat="identity", color="black", position=position_dodge())+
+  theme_minimal()
+ermp
+```
+
+## sul genes
+```{r}
+sul <- filter(hits, grepl("sul", Assay)) 
+sulp <- ggplot(data=sul, aes(x=ID, y=mean_ct, fill=Assay)) +
+geom_bar(stat="identity", color="black", position=position_dodge())+
+  theme_minimal()
+sulp
+```
