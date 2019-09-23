@@ -32,7 +32,7 @@ WORLE 2017 rainfall simulation with probes from "Bob's Primers".
 #### Read in results from wafergen, this is a tab seperated text file  
 We can remove rows with Ct values that have NA as these were not amplified, test to see if any NAs in Ct column:
 ```{r, message=FALSE}
-STRIPs <- read.delim("~/Documents/STRIPs/WORLE_17/data/wafergen_results/STRIPs.txt", row.names=NULL, comment.char="#")
+STRIPs <- read.delim("./data/wafergen_results/STRIPs.txt", row.names=NULL, comment.char="#")
 # For this data, any rows with Ct == NA are not valuable, they indicated that a target sequence was not amplified in a sample so we can leave them out of this data
 
 STRIPs <- STRIPs %>%
