@@ -7,7 +7,6 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -90,6 +89,7 @@ code {
 }
 img {
   max-width:100%;
+  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
@@ -250,12 +250,56 @@ $(document).ready(function () {
 }
 </style>
 
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
 <!-- code folding -->
 <style type="text/css">
 .code-folding-btn { margin-bottom: 4px; }
 </style>
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <style type="text/css">
 
@@ -387,123 +431,106 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)</code></pre>
-<div id="tsne-plots" class="section level1">
-<h1>TSNE plots</h1>
-<div id="the-whole-experiment-tsne" class="section level2">
-<h2>The whole experiment TSNE</h2>
-<pre class="r"><code>by_matrix_tsne &lt;- tsne_phyloseq(phy, treatment = c(&#39;matrix&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Matrix&quot;))
+<pre><code>## ── Attaching packages ──────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
+## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
+## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
+## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
+<pre><code>## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<pre><code>## Loading required package: permute</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## This is vegan 2.5-5</code></pre>
+<pre class="r"><code>phy &lt;- readRDS(&quot;./data/RDS/worle_with_meta.RDS&quot;)
 
-by_matrix_tsne</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-3-1.png" width="816" /></p>
-<p>We can see that each matrix clusters seperately from each other, with the water and manure being very similar. This is to be expected as the water is runoff from a rainfall simulation performed immediately after the manure was applied.</p>
-<div id="removing-asvs-observed-less-than-15-times-dada2-introduces-many-singletons-which-adds-noise-to-ordinations-making-clustering-less-obvisous-than-otu-based-ordinations." class="section level4">
-<h4>Removing ASVs observed less than 15 times, DADA2 introduces many singletons which adds “noise” to ordinations making clustering less obvisous than OTU based ordinations.</h4>
-</div>
-</div>
-<div id="just-water-samples-mintax-15" class="section level2">
-<h2>Just water samples mintax 15</h2>
-<pre class="r"><code>water &lt;- subset_samples(phy, matrix == &quot;water&quot;) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
+data &lt;- data.frame(sample_data(phy)) %&gt;%
+  filter(matrix == &quot;soil&quot;) %&gt;%
+  mutate(Vegetation = case_when(in_plot_location %in% c(&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;, &quot;s4&quot;) ~ &quot;Crop&quot;,
+                                in_plot_location %in% c(&quot;s6&quot;, &quot;s7&quot;, &quot;s8&quot;, &quot;s9&quot;) ~ &quot;Prairie&quot;,
+                                TRUE ~ &quot;Border&quot;))
 
-water_tsne &lt;- tsne_phyloseq(water, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = T, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill = guide_legend(title = &quot;Treatment&quot;)) 
-water_tsne</code></pre>
+all_data &lt;- data.frame(sample_data(phy)) %&gt;%
+  full_join(data)
+
+all_data &lt;- all_data %&gt;%
+  mutate(day = replace(day, day == &#39;t2&#39;, &quot;t02&quot;))
+
+rownames(all_data) &lt;- all_data$id
+
+sample_data(phy) &lt;- all_data</code></pre>
+<div id="measuring-differences-in-bacterial-composition" class="section level1">
+<h1>Measuring differences in bacterial composition</h1>
+<p>Visualizing with ordinations is one method of describing bacterial community variations, similarity, and dissimilarity.</p>
+<p>The first question to ask is if crop soils are different from prairie soils, we will look at depth one of “no_manure_strip” treatment. This question is obviously more focused on elucidating the differences in crop and prairie in agroecosystems with PFS recently planted. This does not consider manure treatment.</p>
+<pre class="r"><code># Subset to desired samples and remove ASVs observed once
+PvCd1 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; treatment == &quot;no_manure_strip&quot; &amp; depth == &quot;d1&quot; &amp; !in_plot_location == &quot;s5&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T)</code></pre>
+<div id="pcoa-with-bray" class="section level2">
+<h2>PCoA with bray</h2>
+<p>Calculate dissimilarity between soil vegetation samples from depth 1 of no_manure_strip and plot the ordination using “bray-curtis”</p>
+<pre class="r"><code>phy.ord.bray &lt;- ordinate(PvCd1, method = &quot;PCoA&quot;, distance = &quot;bray&quot;)
+plot_ordination(PvCd1, phy.ord.bray, color = &quot;Vegetation&quot;) + 
+  stat_ellipse(geom = &quot;polygon&quot;, type = &quot;norm&quot;, alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
 <p><img src="ordinations_files/figure-html/unnamed-chunk-4-1.png" width="816" /></p>
+<pre class="r"><code>adonis(phyloseq::distance(PvCd1, method = &quot;bray&quot;) ~ Vegetation, data = data.frame(sample_data(PvCd1)))</code></pre>
+<pre><code>## 
+## Call:
+## adonis(formula = phyloseq::distance(PvCd1, method = &quot;bray&quot;) ~      Vegetation, data = data.frame(sample_data(PvCd1))) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##             Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## Vegetation   1    0.6485 0.64853  3.3327 0.02392  0.001 ***
+## Residuals  136   26.4654 0.19460         0.97608           
+## Total      137   27.1139                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div id="just-soil-samples-depth-1" class="section level2">
-<h2>Just soil samples, depth 1</h2>
-<pre class="r"><code>soil_depth_1 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d1&quot;) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T) 
-tsne_soil_depth_1 &lt;- tsne_phyloseq(soil_depth_1, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
+<div id="tsne-with-bray" class="section level2">
+<h2>tsne with bray</h2>
+<pre class="r"><code>tsne_phyloseq(PvCd1, treatment = c(&#39;Vegetation&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
   scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;)) 
-
-tsne_soil_depth_1</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-5-1.png" width="816" /></p>
-</div>
-<div id="just-prairie-soil-samples-depth-1" class="section level2">
-<h2>Just prairie soil samples, depth 1</h2>
-<pre class="r"><code>only_prairie_samples &lt;- subset_samples(soil_depth_1, in_plot_location %in% c(&quot;s6&quot;, &quot;s7&quot;, &quot;s8&quot;, &quot;s9&quot;)) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
-              
-only_prairie_samples_tsne &lt;- tsne_phyloseq(only_prairie_samples, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;)) 
-only_prairie_samples_tsne</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-6-1.png" width="816" /></p>
-</div>
-<div id="just-crop-soil-samples-depth-1" class="section level2">
-<h2>Just crop soil samples, depth 1</h2>
-<pre class="r"><code>only_crop_samples &lt;- subset_samples(soil_depth_1, in_plot_location %in% c(&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;, &quot;s4&quot;, &quot;s5&quot;)) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
-              
-
-only_crop_samples_tsne &lt;- tsne_phyloseq(only_crop_samples, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;)) 
-
-only_crop_samples_tsne</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-7-1.png" width="816" /></p>
-</div>
-</div>
-<div id="depth-2" class="section level1">
-<h1>Depth 2</h1>
-<div id="just-soil-samples-depth-2" class="section level2">
-<h2>Just soil samples, depth 2</h2>
-<pre class="r"><code>soil_depth_2 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; depth == &quot;d2&quot;) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
-
-tsne_soil_depth_2 &lt;- tsne_phyloseq(soil_depth_2, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;))
-
-tsne_soil_depth_2</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-8-1.png" width="816" /></p>
-</div>
-<div id="just-prairie-soil-samples-depth-2" class="section level2">
-<h2>Just prairie soil samples, depth 2</h2>
-<pre class="r"><code>only_prairie_samples &lt;- subset_samples(soil_depth_2, in_plot_location %in% c(&quot;s6&quot;, &quot;s7&quot;, &quot;s8&quot;, &quot;s9&quot;)) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
-              
-only_prairie_samples_tsne &lt;- tsne_phyloseq(only_prairie_samples, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;))
-
-only_prairie_samples_tsne</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-9-1.png" width="816" /></p>
-<div id="facet-by-day-of-prairie-soil-sample-t2-out-of-order" class="section level4">
-<h4>Facet by day of prairie soil sample, t2 out of order</h4>
-<pre class="r"><code>only_prairie_samples_tsne.f &lt;- tsne_phyloseq(only_prairie_samples, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;)) +
-  facet_wrap(~day)
-
-only_prairie_samples_tsne.f</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-10-1.png" width="816" /></p>
-</div>
-</div>
-<div id="just-crop-soil-samples-depth-2" class="section level2">
-<h2>Just crop soil samples, depth 2</h2>
-<pre class="r"><code>only_crop_samples &lt;- subset_samples(soil_depth_2, in_plot_location %in% c(&quot;s1&quot;, &quot;s2&quot;, &quot;s3&quot;, &quot;s4&quot;, &quot;s5&quot;)) %&gt;%
-  filter_taxa(function(x) sum(x) &gt; 15, T)
-              
-only_crop_samples_tsne &lt;- tsne_phyloseq(only_crop_samples, treatment = c(&#39;treatment&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
-  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
-  guides(fill=guide_legend(title=&quot;Treatment&quot;))</code></pre>
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
 <pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
 ## which will replace the existing scale.</code></pre>
-<pre class="r"><code>only_crop_samples_tsne</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-11-1.png" width="816" /></p>
+<p><img src="ordinations_files/figure-html/unnamed-chunk-5-1.png" width="816" /></p>
 </div>
-<div id="pcoa-unweighted-uni-frac" class="section level2">
-<h2>PCoA unweighted uni-frac</h2>
-<pre class="r"><code>phy.ord.bray &lt;- ordinate(phy, method = &quot;PCoA&quot;, distance = &quot;bray&quot;)
-plot_ordination(phy, phy.ord.bray, color = &quot;treatment&quot;, shape = &quot;matrix&quot;)</code></pre>
-<p><img src="ordinations_files/figure-html/unnamed-chunk-12-1.png" width="816" /></p>
+<div id="different-distance-matrices" class="section level2">
+<h2>Different distance matrices</h2>
+<p>Hellinger transformation using vegan, this transformation gives low weights to variables with low counts and many zeros. The transfromation itself comprises dividing each value in a data matrix by its row sum, and taking the square root of the quotient. More information on this can be found here: <a href="https://mb3is.megx.net/gustame/reference/transformations">GUSTA ME</a></p>
+<pre class="r"><code># source functions
+# contains function for converting to vegan OTU table
+source(&quot;code/functions.R&quot;)</code></pre>
+<pre class="r"><code>dis &lt;- vegdist(decostand(veganotu(PvCd1), &quot;hell&quot;), &quot;euclidean&quot;)
+ord.dis &lt;- ordinate(PvCd1, method = &quot;RDA&quot;, distance = dis)
+plot_ordination(PvCd1, ord.dis, color = &quot;Vegetation&quot;) + 
+  stat_ellipse(geom = &quot;polygon&quot;, type = &quot;norm&quot;, alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
+<p><img src="ordinations_files/figure-html/unnamed-chunk-7-1.png" width="816" /></p>
+<pre class="r"><code>adonis(dis ~ Vegetation, data = data.frame(sample_data(PvCd1)))</code></pre>
+<pre><code>## 
+## Call:
+## adonis(formula = dis ~ Vegetation, data = data.frame(sample_data(PvCd1))) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##             Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## Vegetation   1     1.160 1.16017  2.5581 0.01846  0.001 ***
+## Residuals  136    61.679 0.45352         0.98154           
+## Total      137    62.839                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
 </div>
 
@@ -525,54 +552,6 @@ $(document).ready(function () {
 });
 
 
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
-
-<!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
