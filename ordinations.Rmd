@@ -39,7 +39,8 @@ rownames(all_data) <- all_data$id
 sample_data(phy) <- all_data
 ```
 
-# Measuring differences in bacterial composition     
+# Measuring differences in bacterial composition
+## Depth 1
 Visualizing with ordinations is one method of describing bacterial community variations, similarity, and dissimilarity.   
 
 The first question to ask is if crop soils are different from prairie soils, we will look at depth one of "no_manure_strip" treatment. This question is obviously more focused on elucidating the differences in crop and prairie in agroecosystems with PFS recently planted. This does not consider manure treatment. 
@@ -50,8 +51,9 @@ PvCd1 <- subset_samples(phy, matrix == "soil" & treatment == "no_manure_strip" &
   filter_taxa(function(x) sum(x) >= 1, T)
 ```
 
-## PCoA with bray
-Calculate dissimilarity between soil vegetation samples from depth 1 of no_manure_strip and plot the ordination using "bray-curtis"    
+### PCoA with bray
+Calculate dissimilarity between soil vegetation samples from depth 1 of no_manure_strip and plot the ordination using "bray-curtis"  
+
 ```{r}
 phy.ord.bray <- ordinate(PvCd1, method = "PCoA", distance = "bray")
 plot_ordination(PvCd1, phy.ord.bray, color = "Vegetation") + 
@@ -60,14 +62,15 @@ plot_ordination(PvCd1, phy.ord.bray, color = "Vegetation") +
   guides(fill=guide_legend(title="Vegetation"))
 adonis(phyloseq::distance(PvCd1, method = "bray") ~ Vegetation, data = data.frame(sample_data(PvCd1)))
 ```
-## tsne with bray
+
+### tsne with bray
 ```{r}
 tsne_phyloseq(PvCd1, treatment = c('Vegetation'), perplexity = 10, circle = TRUE, colors = 'default') +
   scale_fill_viridis(discrete = T, option = "viridis") + ggplot2::theme_bw() +
   guides(fill=guide_legend(title="Vegetation"))
 ```
 
-## Different distance matrices  
+### Different distance matrices  
 Hellinger transformation using vegan, this transformation gives low weights to variables with low counts and many zeros. The transfromation itself comprises dividing each value in a data matrix by its row sum, and taking the square root of the quotient. More information on this can be found here:  <a href="https://mb3is.megx.net/gustame/reference/transformations">GUSTA ME</a>   
 
 ```{r}
@@ -86,3 +89,37 @@ plot_ordination(PvCd1, ord.dis, color = "Vegetation") +
 adonis(dis ~ Vegetation, data = data.frame(sample_data(PvCd1)))
 ```
 
+## Depth 2
+```{r}
+# Subset to desired samples and remove ASVs observed once
+PvCd2 <- subset_samples(phy, matrix == "soil" & treatment == "no_manure_strip" & depth == "d2" & !in_plot_location == "s5") %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+```
+
+### PCoA with bray
+```{r}
+phy.ord.bray2 <- ordinate(PvCd2, method = "PCoA", distance = "bray")
+plot_ordination(PvCd2, phy.ord.bray2, color = "Vegetation") + 
+  stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title="Vegetation"))
+adonis(phyloseq::distance(PvCd2, method = "bray") ~ Vegetation, data = data.frame(sample_data(PvCd2)))
+```
+
+### tsne with bray
+```{r}
+tsne_phyloseq(PvCd2, treatment = c('Vegetation'), perplexity = 10, circle = TRUE, colors = 'default') +
+  scale_fill_viridis(discrete = T, option = "viridis") + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title="Vegetation"))
+```
+
+### Hellinger transformed PCA on depth 2
+```{r}
+dis2 <- vegdist(decostand(veganotu(PvCd2), "hell"), "euclidean")
+ord.dis2 <- ordinate(PvCd2, method = "RDA", distance = dis2)
+plot_ordination(PvCd2, ord.dis2, color = "Vegetation") + 
+  stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title="Vegetation"))
+adonis(dis2 ~ Vegetation, data = data.frame(sample_data(PvCd2)))
+```

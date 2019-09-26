@@ -431,12 +431,12 @@ div.tocify {
 </div>
 
 
-<pre><code>## ── Attaching packages ──────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
+<pre><code>## ── Attaching packages ─────────────────────────────────── tidyverse 1.2.1 ──</code></pre>
 <pre><code>## ✔ ggplot2 3.2.1     ✔ purrr   0.3.2
 ## ✔ tibble  2.1.3     ✔ dplyr   0.8.3
 ## ✔ tidyr   0.8.3     ✔ stringr 1.4.0
 ## ✔ readr   1.3.1     ✔ forcats 0.4.0</code></pre>
-<pre><code>## ── Conflicts ─────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>## ── Conflicts ────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()</code></pre>
 <pre><code>## Loading required package: viridisLite</code></pre>
@@ -462,13 +462,15 @@ rownames(all_data) &lt;- all_data$id
 sample_data(phy) &lt;- all_data</code></pre>
 <div id="measuring-differences-in-bacterial-composition" class="section level1">
 <h1>Measuring differences in bacterial composition</h1>
+<div id="depth-1" class="section level2">
+<h2>Depth 1</h2>
 <p>Visualizing with ordinations is one method of describing bacterial community variations, similarity, and dissimilarity.</p>
 <p>The first question to ask is if crop soils are different from prairie soils, we will look at depth one of “no_manure_strip” treatment. This question is obviously more focused on elucidating the differences in crop and prairie in agroecosystems with PFS recently planted. This does not consider manure treatment.</p>
 <pre class="r"><code># Subset to desired samples and remove ASVs observed once
 PvCd1 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; treatment == &quot;no_manure_strip&quot; &amp; depth == &quot;d1&quot; &amp; !in_plot_location == &quot;s5&quot;) %&gt;%
   filter_taxa(function(x) sum(x) &gt;= 1, T)</code></pre>
-<div id="pcoa-with-bray" class="section level2">
-<h2>PCoA with bray</h2>
+<div id="pcoa-with-bray" class="section level3">
+<h3>PCoA with bray</h3>
 <p>Calculate dissimilarity between soil vegetation samples from depth 1 of no_manure_strip and plot the ordination using “bray-curtis”</p>
 <pre class="r"><code>phy.ord.bray &lt;- ordinate(PvCd1, method = &quot;PCoA&quot;, distance = &quot;bray&quot;)
 plot_ordination(PvCd1, phy.ord.bray, color = &quot;Vegetation&quot;) + 
@@ -493,8 +495,8 @@ plot_ordination(PvCd1, phy.ord.bray, color = &quot;Vegetation&quot;) +
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 </div>
-<div id="tsne-with-bray" class="section level2">
-<h2>tsne with bray</h2>
+<div id="tsne-with-bray" class="section level3">
+<h3>tsne with bray</h3>
 <pre class="r"><code>tsne_phyloseq(PvCd1, treatment = c(&#39;Vegetation&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
   scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
   guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
@@ -502,8 +504,8 @@ plot_ordination(PvCd1, phy.ord.bray, color = &quot;Vegetation&quot;) +
 ## which will replace the existing scale.</code></pre>
 <p><img src="ordinations_files/figure-html/unnamed-chunk-5-1.png" width="816" /></p>
 </div>
-<div id="different-distance-matrices" class="section level2">
-<h2>Different distance matrices</h2>
+<div id="different-distance-matrices" class="section level3">
+<h3>Different distance matrices</h3>
 <p>Hellinger transformation using vegan, this transformation gives low weights to variables with low counts and many zeros. The transfromation itself comprises dividing each value in a data matrix by its row sum, and taking the square root of the quotient. More information on this can be found here: <a href="https://mb3is.megx.net/gustame/reference/transformations">GUSTA ME</a></p>
 <pre class="r"><code># source functions
 # contains function for converting to vegan OTU table
@@ -531,6 +533,73 @@ plot_ordination(PvCd1, ord.dis, color = &quot;Vegetation&quot;) +
 ## Total      137    62.839                 1.00000           
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+</div>
+<div id="depth-2" class="section level2">
+<h2>Depth 2</h2>
+<pre class="r"><code># Subset to desired samples and remove ASVs observed once
+PvCd2 &lt;- subset_samples(phy, matrix == &quot;soil&quot; &amp; treatment == &quot;no_manure_strip&quot; &amp; depth == &quot;d2&quot; &amp; !in_plot_location == &quot;s5&quot;) %&gt;%
+  filter_taxa(function(x) sum(x) &gt;= 1, T)</code></pre>
+<div id="pcoa-with-bray-1" class="section level3">
+<h3>PCoA with bray</h3>
+<pre class="r"><code>phy.ord.bray2 &lt;- ordinate(PvCd2, method = &quot;PCoA&quot;, distance = &quot;bray&quot;)
+plot_ordination(PvCd2, phy.ord.bray2, color = &quot;Vegetation&quot;) + 
+  stat_ellipse(geom = &quot;polygon&quot;, type = &quot;norm&quot;, alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
+<p><img src="ordinations_files/figure-html/unnamed-chunk-9-1.png" width="816" /></p>
+<pre class="r"><code>adonis(phyloseq::distance(PvCd2, method = &quot;bray&quot;) ~ Vegetation, data = data.frame(sample_data(PvCd2)))</code></pre>
+<pre><code>## 
+## Call:
+## adonis(formula = phyloseq::distance(PvCd2, method = &quot;bray&quot;) ~      Vegetation, data = data.frame(sample_data(PvCd2))) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##             Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## Vegetation   1    0.7559 0.75589  4.4708 0.03052  0.001 ***
+## Residuals  142   24.0082 0.16907         0.96948           
+## Total      143   24.7641                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
+<div id="tsne-with-bray-1" class="section level3">
+<h3>tsne with bray</h3>
+<pre class="r"><code>tsne_phyloseq(PvCd2, treatment = c(&#39;Vegetation&#39;), perplexity = 10, circle = TRUE, colors = &#39;default&#39;) +
+  scale_fill_viridis(discrete = T, option = &quot;viridis&quot;) + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
+<pre><code>## Scale for &#39;fill&#39; is already present. Adding another scale for &#39;fill&#39;,
+## which will replace the existing scale.</code></pre>
+<p><img src="ordinations_files/figure-html/unnamed-chunk-10-1.png" width="816" /></p>
+</div>
+<div id="hellinger-transformed-pca-on-depth-2" class="section level3">
+<h3>Hellinger transformed PCA on depth 2</h3>
+<pre class="r"><code>dis2 &lt;- vegdist(decostand(veganotu(PvCd2), &quot;hell&quot;), &quot;euclidean&quot;)
+ord.dis2 &lt;- ordinate(PvCd2, method = &quot;RDA&quot;, distance = dis2)
+plot_ordination(PvCd2, ord.dis2, color = &quot;Vegetation&quot;) + 
+  stat_ellipse(geom = &quot;polygon&quot;, type = &quot;norm&quot;, alpha = 0.1, aes(fill = Vegetation)) +
+  scale_colour_viridis_d() + ggplot2::theme_bw() +
+  guides(fill=guide_legend(title=&quot;Vegetation&quot;))</code></pre>
+<p><img src="ordinations_files/figure-html/unnamed-chunk-11-1.png" width="816" /></p>
+<pre class="r"><code>adonis(dis2 ~ Vegetation, data = data.frame(sample_data(PvCd2)))</code></pre>
+<pre><code>## 
+## Call:
+## adonis(formula = dis2 ~ Vegetation, data = data.frame(sample_data(PvCd2))) 
+## 
+## Permutation: free
+## Number of permutations: 999
+## 
+## Terms added sequentially (first to last)
+## 
+##             Df SumsOfSqs MeanSqs F.Model      R2 Pr(&gt;F)    
+## Vegetation   1     1.475 1.47531  3.4601 0.02379  0.001 ***
+## Residuals  142    60.546 0.42638         0.97621           
+## Total      143    62.021                 1.00000           
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+</div>
 </div>
 </div>
 
