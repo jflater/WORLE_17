@@ -31,7 +31,7 @@ source("code/functions.R")
 ```
 
 ```{r}
-phy <- readRDS("./data/RDS/worle_with_meta.RDS")
+phy <- readRDS("data/worle_with_meta_final.RDS")
 colnames(sample_data(phy))
 unique(phy@sam_data$day)
 data <- data.frame(sample_data(phy)) %>%
@@ -89,4 +89,27 @@ sample_data(persistors.phy)
 plot_bar(persistors.phy, x = "in_plot_location", y = "Abundance") +
   facet_grid(day~treatment)
 ```
+```{r}
+melted <- psmelt(persistors.phy)
 
+g <- ggplot(melted, aes(x = in_plot_location, y = Abundance))
+plot <- g + 
+  geom_bar(aes(fill = Phylum), stat = "identity") +
+  facet_grid(day~treatment)
+plot
+```
+
+Remember, manured_control did not have any samples from s6-s9. Notice that the manured strip plots, where manure was applied to the crop side, the manure associated OTUs do not appear to be transported into the strip itself! This is an extremely interesting finding! 
+
+How does depth affect the number of manure associated OTUs that we detected? 
+```{r}
+manured_strip <- melted %>%
+  filter(treatment == "manured_strip")
+
+plot <- g + 
+  geom_bar(aes(fill = Phylum), stat = "identity") +
+  facet_grid(day~depth)
+plot
+```
+
+We see that in general, d1 has a much higher abundance of manure associated OTUs. However, d2 does show some, so there are OTUs moving down the soil profile! This could have implication for tile drained agriculture. I would conclude that strips effectively attenuate the transport of manure associated bacteria in overland flow, but manure associated bacteria are able to move down into the soil profile with the water. So while strips may be effective in mitigating overland transport of manure associated bacteria, it's likely that in tile drained fields there would be a chance for manure associated OTUs to leave the system. 

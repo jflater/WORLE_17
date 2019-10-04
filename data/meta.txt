@@ -520,7 +520,7 @@ P4-s6-d1-b	Jared
 P4-s6-d1-t0	Jared			
 P4-s6-d1-t14	Jared			
 P4-s6-d1-t21	Jared			
-P4-S6-d1-t2	Jared			
+P4-s6-d1-t2	Jared			
 P4-s6-d1-t42	Jared			
 P4-s6-d2-b	Jared			
 P4-s6-d2-t0	Jared			
