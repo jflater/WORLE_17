@@ -1,0 +1,88 @@
+---
+title: "DESeq WORLE 2017 soils and water 16s rRNA"
+author: "Jared"
+date: "10/14/2019"
+output:
+  html_document:
+    df_print: paged
+    fig_width: 8.5
+    fig_height: 11
+    fig_caption: true
+    toc: true
+    toc_float: true
+    number_sections: false
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, echo = F, message=F}
+library(phyloseq)
+library(tidyverse)
+library(gplots)
+library(phylosmith)
+library(DESeq2)
+```
+```{r source}
+# source functions
+source("code/functions.R")
+```
+
+```{r makephy, message=F}
+phy <- readRDS("data/worle_with_meta_final.RDS")
+data <- data.frame(sample_data(phy)) %>%
+  filter(matrix == "soil") %>%
+  mutate(Vegetation = case_when(in_plot_location %in% c("s1", "s2", "s3", "s4") ~ "Crop",
+                                in_plot_location %in% c("s6", "s7", "s8", "s9") ~ "Prairie",
+                                TRUE ~ "Border"))
+
+all_data <- data.frame(sample_data(phy)) %>%
+  full_join(data)
+
+all_data <- all_data %>%
+  mutate(day = replace(day, day == 't2', "t02"))
+
+rownames(all_data) <- all_data$id
+
+sample_data(phy) <- all_data
+```
+      
+Using DESeq to determine ASVs that are significantly more aboundant in one group as compared to another. Let's compare the d1 soil samples from the prairie portion, we will start with days 02 and 14 as these two days have the highest abundance of manure associated ASVs
+```{r subset_phy}
+d1_prairie <- subset_samples(phy, Vegetation == "Prairie" & depth == "d1" & day %in% c("t02", "t14")) %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+```
+
+Let's see what ASVs are more abundant in the manured praire than the non-manured prairie
+```{r DESeq}
+# Be very careful of the design formula in the who_diff_day() function
+# This function also selects only alpha 0.01 for significant and increasing ASVs to be returned
+prairie_d1_log_plot <- d1_prairie %>%
+  phyloseq_to_deseq2( ~ treatment) %>%
+  DESeq(test = "Wald", fitType = "local") %>%
+  who_diff_day("manured_strip", "no_manure_strip", "treatment", d1_prairie) %>%
+  log_plot("ASVs more abundant in manured strip than no_manure strip from days 2 and 14")
+prairie_d1_log_plot
+```
+
+Well that's interesting! We have a lot more manure associated OTUs detected in the manured strip, let's look at the crop portion with this same plot. 
+```{r}
+d1_crop <- subset_samples(phy, Vegetation == "Crop" & depth == "d1" & day %in% c("t02", "t14") & treatment %in% c("manured_strip", "no_manure_strip")) %>%
+  filter_taxa(function(x) sum(x) >= 1, T)
+```
+
+Let's see what ASVs are more abundant in the manured praire than the non-manured prairie
+```{r DESeqCrop}
+# Be very careful of the design formula in the who_diff_day() function
+# This function also selects only alpha 0.01 for significant and increasing ASVs to be returned
+crop_d1_log_plot <- d1_crop %>%
+  phyloseq_to_deseq2( ~ treatment) %>%
+  DESeq(test = "Wald", fitType = "local") %>%
+  who_diff_day("manured_strip", "no_manure_strip", "treatment", d1_crop) %>%
+  log_plot("ASVs more abundant in manured strip than no_manure strip from days 2 and 14")
+crop_d1_log_plot
+```
+
+
