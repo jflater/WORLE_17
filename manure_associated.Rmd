@@ -19,18 +19,18 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 #### First we read in the data, a R data structure of the phyloseq object       
-```{r, echo = F}
+```{r packages, echo = F}
 library(phyloseq)
 library(tidyverse)
 library(gplots)
 library(phylosmith)
 ```
-```{r}
+```{r source}
 # source functions
 source("code/functions.R")
 ```
 
-```{r}
+```{r makephy}
 phy <- readRDS("data/worle_with_meta_final.RDS")
 colnames(sample_data(phy))
 unique(phy@sam_data$day)
@@ -52,12 +52,12 @@ rownames(all_data) <- all_data$id
 
 sample_data(phy) <- all_data
 ```
-```{r}
+```{r hist}
 hist(sample_sums(phy), breaks = 100)
 ```
 
 ### Get a list of ASVs from manure and soil before manure was applied
-```{r}
+```{r manure-otus}
 manure_otus <- subset_samples(phy, matrix == "manure") %>%
   filter_taxa(function(x) sum(x) >= 1, T) %>%
   otu_table() %>%
@@ -73,7 +73,7 @@ manure_persitors <- attr(vvv_diag, "intersections")$Manure_ASVs
 ```
 
 ### Plot relative abundance of only manure associated ASVs   
-```{r}
+```{r persistors}
 # Check reads, I was under the impression that all samples had at least 10k
 phy.OTU <- OTU_to_column(phy)
 manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
@@ -81,15 +81,14 @@ manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
   transform_sample_counts(function(x) x / sum(x))
 
 persistors.phy <- prune_taxa(manure_persitors, manure.phy) 
-sample_data(persistors.phy)
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
-```{r}
+```{r plot1}
 plot_bar(persistors.phy, x = "in_plot_location", y = "Abundance") +
   facet_grid(day~treatment)
 ```
-```{r}
+```{r ggplot1}
 melted <- psmelt(persistors.phy)
 
 g <- ggplot(melted, aes(x = in_plot_location, y = Abundance))
@@ -102,7 +101,7 @@ plot
 Remember, manured_control did not have any samples from s6-s9. Notice that the manured strip plots, where manure was applied to the crop side, the manure associated OTUs do not appear to be transported into the strip itself! This is an extremely interesting finding! 
 
 How does depth affect the number of manure associated OTUs that we detected? 
-```{r}
+```{r depth2}
 manured_strip <- melted %>%
   filter(treatment == "manured_strip")
 

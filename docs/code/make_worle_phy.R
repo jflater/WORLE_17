@@ -9,7 +9,7 @@ library(phyloseq)
 library(tidyverse)
 library(phylosmith)
 
-phy <- readRDS("data/usda.RDS")
+phy <- readRDS("data/RDS/usda.RDS")
 taxa_names(phy) <- paste0('ASV_', seq_along(taxa_names(phy))) #this renames the "OTU" to ASV1....ASV1000...
 sample_data(phy) <- read.delim(sep="\t", file="data/meta.txt", row.names=1, header=TRUE)
 colnames(sample_data(phy)) <- c("PI", "source", "date", "concentration")
@@ -41,4 +41,4 @@ row.names(test) == row.names(meta)
 sample_data(worle) <- meta
 head(sample_data(worle))
 
-saveRDS(worle, file = "worle_with_meta.RDS")
+saveRDS(worle, file = "data/worle_with_meta_final.RDS")
