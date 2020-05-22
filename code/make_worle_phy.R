@@ -10,10 +10,25 @@ library(tidyverse)
 library(phylosmith)
 
 phy <- readRDS("data/RDS/usda.RDS")
-taxa_names(phy) <- paste0('ASV_', seq_along(taxa_names(phy))) #this renames the "OTU" to ASV1....ASV1000...
-sample_data(phy) <- read.delim(sep="\t", file="data/meta.txt", row.names=1, header=TRUE)
-colnames(sample_data(phy)) <- c("PI", "source", "date", "concentration")
+phy
+phy1 <- phy
+sample_data(phy1) <- read.delim(sep="\t", file="data/meta.txt", row.names=1, header=TRUE)
+phy1
+test <- read.delim(sep="\t", file="data/meta.txt", row.names=1, header=TRUE)
+colnames(test) <- c("PI", "source", "date", "concentration")
+setdiff(rownames(test), sample_names(phy))
+setdiff(sample_names(phy), rownames(test))
+# Yo, the problem with different sample numbers is the big S in "P4-S6-d1-t2"
+colnames(test)
 
+test1 <- test %>%
+  filter(PI == "Jared")
+
+
+
+
+colnames(sample_data(phy)) <- c("PI", "source", "date", "concentration")
+nsamples(phy)
 worle <- subset_samples(phy, PI == "Jared")
 worle
 rm(phy)

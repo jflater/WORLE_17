@@ -80,7 +80,12 @@ manure.phy <- subset_samples(phy.OTU, matrix == "soil") %>%
   filter_taxa(function(x) sum(x) >= 1, T) %>% 
   transform_sample_counts(function(x) x / sum(x))
 
+water.phy <- subset_samples(phy.OTU, matrix == "water") %>%
+  filter_taxa(function(x) sum(x) >= 1, T) %>% 
+  transform_sample_counts(function(x) x / sum(x))
+
 persistors.phy <- prune_taxa(manure_persitors, manure.phy) 
+water.phy <- prune_taxa(manure_persitors, water.phy)
 ```
 
 ### Trying to get a good plot of the abundance of manure associated ASVs
@@ -112,3 +117,14 @@ plot
 ```
 
 We see that in general, d1 has a much higher abundance of manure associated OTUs. However, d2 does show some, so there are OTUs moving down the soil profile! This could have implication for tile drained agriculture. I would conclude that strips effectively attenuate the transport of manure associated bacteria in overland flow, but manure associated bacteria are able to move down into the soil profile with the water. So while strips may be effective in mitigating overland transport of manure associated bacteria, it's likely that in tile drained fields there would be a chance for manure associated OTUs to leave the system. 
+
+But what about the manure associated ASVs that we can detect in the runoff water that was collected? 
+```{r ggplotwater}
+melted.w <- psmelt(water.phy)
+
+g <- ggplot(melted.w, aes(x = runoff_sample, y = Abundance))
+plot <- g + 
+  geom_bar(aes(fill = Phylum), stat = "identity") +
+  facet_grid(~treatment)
+plot
+```

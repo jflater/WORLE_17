@@ -13,6 +13,8 @@ navbar:
     href: ordinations.html
   - text: ARGs
     href: args.html
+  - text: Differential-Abundance
+    href: Differential_abundance.html
     
 output:
   html_document:
