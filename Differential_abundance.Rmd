@@ -21,7 +21,6 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r packages, echo = F, message=F}
 library(phyloseq)
 library(tidyverse)
-library(gplots)
 library(phylosmith)
 library(DESeq2)
 ```
@@ -31,7 +30,7 @@ source("code/functions.R")
 ```
 
 ```{r makephy, message=F}
-phy <- readRDS("data/worle_with_meta_final.RDS")
+phy <- readRDS("data/RDS/worle_with_meta.RDS")
 data <- data.frame(sample_data(phy)) %>%
   filter(matrix == "soil") %>%
   mutate(Vegetation = case_when(in_plot_location %in% c("s1", "s2", "s3", "s4") ~ "Crop",
@@ -49,13 +48,15 @@ rownames(all_data) <- all_data$id
 sample_data(phy) <- all_data
 ```
       
-Using DESeq to determine ASVs that are significantly more aboundant in one group as compared to another. Let's compare the d1 soil samples from the prairie portion, we will start with days 02 and 14 as these two days have the highest abundance of manure associated ASVs
+Using DESeq to determine ASVs that are significantly more abundant in one group as compared to another. Let's compare the d1 soil samples from the prairie portion, we will start with days 02 and 14 as these two days have the highest abundance of manure associated ASVs
+
 ```{r subset_phy}
 d1_prairie <- subset_samples(phy, Vegetation == "Prairie" & depth == "d1" & day %in% c("t02", "t14")) %>%
   filter_taxa(function(x) sum(x) >= 1, T)
 ```
 
 Let's see what ASVs are more abundant in the manured praire than the non-manured prairie
+
 ```{r DESeq}
 # Be very careful of the design formula in the who_diff_day() function
 # This function also selects only alpha 0.01 for significant and increasing ASVs to be returned
@@ -68,12 +69,14 @@ prairie_d1_log_plot
 ```
 
 Well that's interesting! We have a lot more manure associated OTUs detected in the manured strip, let's look at the crop portion with this same plot. 
+
 ```{r}
 d1_crop <- subset_samples(phy, Vegetation == "Crop" & depth == "d1" & day %in% c("t02", "t14") & treatment %in% c("manured_strip", "no_manure_strip")) %>%
   filter_taxa(function(x) sum(x) >= 1, T)
 ```
 
-Let's see what ASVs are more abundant in the manured praire than the non-manured prairie
+Let's see what ASVs are more abundant in the manured prairie than the non-manured prairie
+
 ```{r DESeqCrop}
 # Be very careful of the design formula in the who_diff_day() function
 # This function also selects only alpha 0.01 for significant and increasing ASVs to be returned
