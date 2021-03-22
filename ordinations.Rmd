@@ -60,7 +60,11 @@ plot_ordination(PvCd1, phy.ord.bray, color = "Vegetation") +
   stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
   scale_colour_viridis_d() + ggplot2::theme_bw() +
   guides(fill=guide_legend(title="Vegetation"))
-adonis(phyloseq::distance(PvCd1, method = "bray") ~ Vegetation, data = data.frame(sample_data(PvCd1)))
+
+ord_data <- data.frame(sample_data(PvCd1))
+
+dist <- phyloseq::distance(PvCd1, method = "bray")
+adonis2(dist ~ Vegetation, data = ord_data)
 ```
 
 ### tsne with bray
@@ -71,7 +75,7 @@ tsne_phyloseq(PvCd1, treatment = c('Vegetation'), perplexity = 10, circle = TRUE
 ```
 
 ### Different distance matrices  
-Hellinger transformation using vegan, this transformation gives low weights to variables with low counts and many zeros. The transfromation itself comprises dividing each value in a data matrix by its row sum, and taking the square root of the quotient. More information on this can be found here:  <a href="https://mb3is.megx.net/gustame/reference/transformations">GUSTA ME</a>   
+Hellinger transformation using vegan, this transformation gives low weights to variables with low counts and many zeros. The transformation itself comprises dividing each value in a data matrix by its row sum, and taking the square root of the quotient. More information on this can be found here:  <a href="https://mb3is.megx.net/gustame/reference/transformations">GUSTA ME</a>   
 
 ```{r}
 # source functions
@@ -86,7 +90,7 @@ plot_ordination(PvCd1, ord.dis, color = "Vegetation") +
   stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
   scale_colour_viridis_d() + ggplot2::theme_bw() +
   guides(fill=guide_legend(title="Vegetation"))
-adonis(dis ~ Vegetation, data = data.frame(sample_data(PvCd1)))
+adonis2(dis ~ Vegetation, data = data.frame(sample_data(PvCd1)))
 ```
 
 ## Depth 2
@@ -103,7 +107,7 @@ plot_ordination(PvCd2, phy.ord.bray2, color = "Vegetation") +
   stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
   scale_colour_viridis_d() + ggplot2::theme_bw() +
   guides(fill=guide_legend(title="Vegetation"))
-adonis(phyloseq::distance(PvCd2, method = "bray") ~ Vegetation, data = data.frame(sample_data(PvCd2)))
+adonis2(phyloseq::distance(PvCd2, method = "bray") ~ Vegetation, data = data.frame(sample_data(PvCd2)))
 ```
 
 ### tsne with bray
@@ -121,5 +125,5 @@ plot_ordination(PvCd2, ord.dis2, color = "Vegetation") +
   stat_ellipse(geom = "polygon", type = "norm", alpha = 0.1, aes(fill = Vegetation)) +
   scale_colour_viridis_d() + ggplot2::theme_bw() +
   guides(fill=guide_legend(title="Vegetation"))
-adonis(dis2 ~ Vegetation, data = data.frame(sample_data(PvCd2)))
+adonis2(dis2 ~ Vegetation, data = data.frame(sample_data(PvCd2)))
 ```

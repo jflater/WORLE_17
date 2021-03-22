@@ -22,8 +22,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r packages, echo = F}
 library(phyloseq)
 library(tidyverse)
-library(gplots)
 library(phylosmith)
+library(venn)
 ```
 ```{r source}
 # source functions
@@ -31,7 +31,7 @@ source("code/functions.R")
 ```
 
 ```{r makephy}
-phy <- readRDS("data/worle_with_meta_final.RDS")
+phy <- readRDS("data/RDS/worle_with_meta.RDS")
 colnames(sample_data(phy))
 unique(phy@sam_data$day)
 data <- data.frame(sample_data(phy)) %>%
